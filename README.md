@@ -5,6 +5,9 @@ monitoring concept, matching the MVP screenshots. This is the **web
 prototype only** (Phase 1 of the project brief) — no OS-level device
 enrollment, MDM, or native mobile code.
 
+A React Native (Expo) rewrite of this same app lives in [`mobile/`](mobile/README.md) —
+same screens and state, running as an installable native app.
+
 ## Run
 
 ```bash
