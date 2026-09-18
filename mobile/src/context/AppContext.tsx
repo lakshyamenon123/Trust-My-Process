@@ -4,6 +4,9 @@ export type AlertType = 'warning' | 'info'
 export type Alert = { id: number; type: AlertType; text: string; time: string }
 export type View = 'login' | 'parent' | 'child'
 export type ScenarioKey = 'home' | 'instagram' | 'private-blocked' | 'inappropriate' | 'limit-hit'
+// tapping an app icon on the child's home screen produces one of these,
+// rather than only the five fixed demo-panel scenarios above
+export type AppKey = ScenarioKey | `open:${string}` | `blocked-app:${string}`
 
 const AppContext = createContext<ReturnType<typeof buildValue> | null>(null)
 
@@ -75,8 +78,9 @@ function buildValue(state: {
   setDailyLimitHours: (h: number) => void
   usedMinutes: number
   blockedApps: string[]
-  currentApp: ScenarioKey
+  currentApp: AppKey
   triggerScenario: (key: ScenarioKey) => void
+  openApp: (name: string) => void
   emergencyLocked: boolean
   emergencyLock: () => void
   unlockDevice: () => void
@@ -91,7 +95,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const [dailyLimitHours, setDailyLimitHours] = useState(4)
   const [usedMinutes] = useState(165)
   const [blockedApps] = useState(['TikTok', 'Snapchat', 'Facebook', 'Instagram', 'Gaming'])
-  const [currentApp, setCurrentApp] = useState<ScenarioKey>('home')
+  const [currentApp, setCurrentApp] = useState<AppKey>('home')
   const [emergencyLocked, setEmergencyLocked] = useState(false)
   const [connected] = useState(true)
 
@@ -103,6 +107,17 @@ export function AppProvider({ children }: { children: ReactNode }) {
     setCurrentApp(key)
     const alert = SCENARIO_ALERTS[key]
     if (alert) addAlert(...alert)
+  }
+
+  // tapping any icon on the child's home screen goes through here — apps on
+  // the parent's blocked list get stopped, everything else "opens"
+  function openApp(name: string) {
+    if (blockedApps.includes(name)) {
+      setCurrentApp(`blocked-app:${name}`)
+      addAlert('warning', `${name} blocked by parental controls`)
+    } else {
+      setCurrentApp(`open:${name}`)
+    }
   }
 
   function emergencyLock() {
@@ -128,6 +143,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         blockedApps,
         currentApp,
         triggerScenario,
+        openApp,
         emergencyLocked,
         emergencyLock,
         unlockDevice,

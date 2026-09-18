@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useApp } from '../context/AppContext'
-import type { ScenarioKey } from '../context/AppContext'
+import type { AppKey, ScenarioKey } from '../context/AppContext'
 import Header from '../components/Header'
 import AlertRow from '../components/AlertRow'
 import { colors } from '../theme'
@@ -30,16 +30,26 @@ const SCENARIOS: { key: ScenarioKey; label: string; color: string }[] = [
 
 const GRADIENT = '#c23a8f' // flat stand-in for the web version's CSS gradient — RN core has no linear-gradient
 
-// this is basically a state machine but if/else reads fine for 5 cases —
-// worth revisiting as a lookup table if we add more scenarios
+function iconFor(name: string) {
+  return HOME_APPS.find((a) => a.name === name)
+}
+
+// this is basically a state machine but if/else reads fine for a handful of
+// cases — worth revisiting as a lookup table if this keeps growing
 function PhoneScreen({
   app,
   emergencyLocked,
   onUnlockAttempt,
+  onOpenApp,
+  onPrivateBrowse,
+  onGoHome,
 }: {
-  app: ScenarioKey
+  app: AppKey
   emergencyLocked: boolean
   onUnlockAttempt: () => void
+  onOpenApp: (name: string) => void
+  onPrivateBrowse: () => void
+  onGoHome: () => void
 }) {
   if (emergencyLocked) {
     return (
@@ -84,6 +94,42 @@ function PhoneScreen({
     )
   }
 
+  if (app.startsWith('blocked-app:')) {
+    const name = app.slice('blocked-app:'.length)
+    return (
+      <View style={styles.blockedScreen}>
+        <Text style={styles.blockedIcon}>{iconFor(name)?.icon ?? '🔒'}</Text>
+        <Text style={styles.blockedTitle}>{name} Blocked</Text>
+        <Text style={styles.blockedText}>{name} is blocked by parental controls.</Text>
+        <TouchableOpacity style={styles.unlockHint} onPress={onGoHome}>
+          <Text style={styles.unlockHintText}>← Home</Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+
+  if (app.startsWith('open:')) {
+    const name = app.slice('open:'.length)
+    const icon = iconFor(name)
+    return (
+      <View style={styles.appScreen}>
+        <View style={styles.appOpenHeader}>
+          <TouchableOpacity onPress={onGoHome}>
+            <Text style={styles.appOpenBack}>← Home</Text>
+          </TouchableOpacity>
+          <Text style={styles.appTopbar}>{name}</Text>
+        </View>
+        <View
+          style={[styles.appOpenGlyph, { backgroundColor: icon?.color === 'gradient' ? GRADIENT : icon?.color ?? colors.navy }]}
+        >
+          <Text style={styles.appOpenGlyphText}>{icon?.icon ?? '📱'}</Text>
+        </View>
+        <View style={styles.igPost} />
+        <View style={styles.igPost} />
+      </View>
+    )
+  }
+
   if (app === 'instagram') {
     return (
       <View style={[styles.appScreen, styles.appScreenInstagram]}>
@@ -106,7 +152,12 @@ function PhoneScreen({
     <View style={styles.home}>
       <View style={styles.appIconGrid}>
         {HOME_APPS.map((a, i) => (
-          <View style={styles.appIcon} key={i}>
+          <TouchableOpacity
+            style={styles.appIcon}
+            key={i}
+            disabled={!a.name}
+            onPress={() => (a.name === 'Private Browse' ? onPrivateBrowse() : onOpenApp(a.name))}
+          >
             <View
               style={[
                 styles.appIconGlyph,
@@ -118,7 +169,7 @@ function PhoneScreen({
               </Text>
             </View>
             <Text style={styles.appIconLabel}>{a.name}</Text>
-          </View>
+          </TouchableOpacity>
         ))}
       </View>
     </View>
@@ -126,7 +177,7 @@ function PhoneScreen({
 }
 
 export default function ChildDevice() {
-  const { alerts, currentApp, triggerScenario, emergencyLocked, addAlert } = useApp()
+  const { alerts, currentApp, triggerScenario, openApp, emergencyLocked, addAlert } = useApp()
   const [now, setNow] = useState(new Date())
 
   // just for the fake status bar clock, doesn't need to be anywhere near real-time accurate
@@ -150,6 +201,9 @@ export default function ChildDevice() {
             app={currentApp}
             emergencyLocked={emergencyLocked}
             onUnlockAttempt={() => addAlert('info', 'Child attempted to request unlock')}
+            onOpenApp={openApp}
+            onPrivateBrowse={() => triggerScenario('private-blocked')}
+            onGoHome={() => triggerScenario('home')}
           />
           {currentApp === 'home' && !emergencyLocked && (
             <View style={styles.phoneDock}>
@@ -259,9 +313,21 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   unlockHintText: { color: colors.white, fontSize: 12 },
-  appScreen: { height: 480, padding: 16 },
+  appScreen: { height: 480, padding: 16, backgroundColor: colors.white },
   appScreenInstagram: { backgroundColor: colors.white },
   appTopbar: { fontWeight: '700', paddingBottom: 14, color: colors.text },
+  appOpenHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  appOpenBack: { fontSize: 12, color: colors.blueLight, fontWeight: '600' },
+  appOpenGlyph: {
+    width: 64,
+    height: 64,
+    borderRadius: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    marginVertical: 20,
+  },
+  appOpenGlyphText: { fontSize: 26, color: colors.white, fontWeight: '700' },
   igStoryRow: { flexDirection: 'row', gap: 12, marginBottom: 16 },
   igStory: { alignItems: 'center', gap: 4 },
   igStoryRing: { width: 44, height: 44, borderRadius: 22, backgroundColor: GRADIENT },
