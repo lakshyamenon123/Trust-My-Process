@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { useApp } from '../context/AppContext'
+import type { Alert } from '../context/AppContext'
 import Header from '../components/Header'
 import AlertRow from '../components/AlertRow'
 import StudentInsights from '../components/StudentInsights'
@@ -24,6 +25,20 @@ export default function ParentDashboard() {
   // local draft so the input isn't fighting the "real" value on every keystroke
   const [limitInput, setLimitInput] = useState(String(dailyLimitHours))
 
+  // pops a banner only when a *new* alert lands (child tapped a blocked app,
+  // hit their limit, etc) — not for the initial "connected" seed alert
+  const [toast, setToast] = useState<Alert | null>(null)
+  const prevAlertCount = useRef(alerts.length)
+  useEffect(() => {
+    if (alerts.length > prevAlertCount.current) {
+      setToast(alerts[0])
+      const timeout = setTimeout(() => setToast(null), 4500)
+      prevAlertCount.current = alerts.length
+      return () => clearTimeout(timeout)
+    }
+    prevAlertCount.current = alerts.length
+  }, [alerts])
+
   const limitMinutes = dailyLimitHours * 60
   const pctUsed = Math.min(100, Math.round((usedMinutes / limitMinutes) * 100))
   const hours = Math.floor(usedMinutes / 60)
@@ -39,6 +54,18 @@ export default function ParentDashboard() {
   return (
     <View style={styles.screen}>
       <Header />
+      {toast && (
+        <View style={[styles.toast, toast.type === 'warning' ? styles.toastWarning : styles.toastInfo]}>
+          <Text style={styles.toastIcon}>{toast.type === 'warning' ? '⚠️' : 'ℹ️'}</Text>
+          <View style={styles.toastTextWrap}>
+            <Text style={styles.toastTitle}>New Alert</Text>
+            <Text style={styles.toastText}>{toast.text}</Text>
+          </View>
+          <TouchableOpacity onPress={() => setToast(null)} hitSlop={8}>
+            <Text style={styles.toastClose}>✕</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       <ScrollView contentContainerStyle={styles.grid}>
         <View style={styles.card}>
           <Text style={styles.cardTitle}>Child Device Status</Text>
@@ -148,6 +175,30 @@ export default function ParentDashboard() {
 
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.bg },
+  toast: {
+    position: 'absolute',
+    top: 12,
+    left: 16,
+    right: 16,
+    zIndex: 10,
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    borderRadius: 12,
+    padding: 14,
+    shadowColor: '#141e3c',
+    shadowOpacity: 0.2,
+    shadowRadius: 14,
+    shadowOffset: { width: 0, height: 6 },
+    elevation: 6,
+  },
+  toastWarning: { backgroundColor: '#fdecec', borderWidth: 1, borderColor: '#f3b9b9' },
+  toastInfo: { backgroundColor: '#eaf1fd', borderWidth: 1, borderColor: '#bcd4f7' },
+  toastIcon: { fontSize: 16 },
+  toastTextWrap: { flex: 1 },
+  toastTitle: { fontWeight: '700', fontSize: 12, color: colors.text, marginBottom: 2 },
+  toastText: { fontSize: 13, color: colors.text },
+  toastClose: { fontSize: 14, color: colors.textMuted, padding: 2 },
   grid: { padding: 16, gap: 16 },
   card: {
     backgroundColor: colors.cardBg,

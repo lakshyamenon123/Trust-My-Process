@@ -12,11 +12,12 @@ const AppContext = createContext<ReturnType<typeof buildValue> | null>(null)
 
 // everything below is hardcoded demo data — once there's a real backend this
 // whole file basically becomes API calls + a bit of local UI state
+
+// the feed starts with just the connection event — every alert after this
+// is only added in response to something the child actually does on their
+// device (see openApp/triggerScenario/emergencyLock below), not pre-seeded
 const initialAlerts: Alert[] = [
-  { id: 1, type: 'warning', text: 'Inappropriate content blocked', time: '10:45 AM' },
-  { id: 2, type: 'info', text: 'Screen time limit approaching (85%)', time: '10:12 AM' },
-  { id: 3, type: 'warning', text: 'Private browsing attempt blocked', time: '9:33 AM' },
-  { id: 4, type: 'info', text: 'Device connected and monitoring active', time: '8:55 AM' },
+  { id: 1, type: 'info', text: 'Device connected and monitoring active', time: '8:55 AM' },
 ]
 
 export const weeklyData = [
