@@ -1,0 +1,76 @@
+import { useParams, useLocation, Link } from 'react-router-dom'
+import { CheckCircle2, ArrowRight } from 'lucide-react'
+import DetailShell from '@/components/DetailShell'
+import Card from '@/components/Card'
+import ProgressRing from '@/components/ProgressRing'
+import { interests, careers, findById } from '@/data/studentData'
+
+export default function InterestDetail() {
+  const { id } = useParams()
+  const location = useLocation()
+  const isParent = location.pathname.startsWith('/parent')
+  const item = findById(interests, id)
+
+  if (!item) return <p className="text-sm text-muted">Interest not found.</p>
+
+  const related = item.relatedCareers.map((cid) => findById(careers, cid)).filter(Boolean)
+
+  return (
+    <DetailShell icon={item.icon} title={item.title} subtitle={item.summary}>
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto]">
+        <Card className="p-6">
+          <h2 className="font-display text-base font-semibold text-ink">About this interest</h2>
+          <p className="mt-2 text-sm text-muted">{item.description}</p>
+        </Card>
+        <Card className="flex flex-col items-center justify-center p-6">
+          <ProgressRing value={item.level} size={88} />
+          <p className="mt-2 text-xs font-medium text-muted">Engagement</p>
+        </Card>
+      </div>
+
+      <Card className="p-6">
+        <h2 className="font-display text-base font-semibold text-ink">Evidence</h2>
+        <ul className="mt-3 space-y-2">
+          {item.evidence.map((e) => (
+            <li key={e} className="flex items-start gap-2 text-sm text-ink">
+              <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-accent" />
+              {e}
+            </li>
+          ))}
+        </ul>
+      </Card>
+
+      {item.projects.length > 0 && (
+        <Card className="p-6">
+          <h2 className="font-display text-base font-semibold text-ink">Projects</h2>
+          <div className="mt-3 space-y-3">
+            {item.projects.map((p) => (
+              <div key={p.title} className="rounded-xl bg-bg-soft p-3">
+                <p className="text-sm font-semibold text-ink">{p.title}</p>
+                <p className="text-xs text-muted">{p.note}</p>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
+
+      {related.length > 0 && (
+        <Card className="p-6">
+          <h2 className="font-display text-base font-semibold text-ink">Related careers</h2>
+          <div className="mt-3 space-y-2">
+            {related.map((c) => (
+              <Link
+                key={c.id}
+                to={isParent ? `/parent/career/${c.id}` : `/student/careers/${c.id}`}
+                className="flex items-center justify-between rounded-xl bg-bg-soft p-3 transition-colors hover:bg-primary/5"
+              >
+                <span className="text-sm font-medium text-ink">{c.title}</span>
+                <ArrowRight className="h-4 w-4 text-muted" />
+              </Link>
+            ))}
+          </div>
+        </Card>
+      )}
+    </DetailShell>
+  )
+}

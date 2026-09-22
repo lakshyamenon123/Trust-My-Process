@@ -1,12 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #5145cd;
+  --color-primary-deep: #2d2a6e;
+  --color-accent: #0fb67d;
+  --color-highlight: #ff8a5b;
+  --color-bg-soft: #f6f7fb;
+  --color-surface: #ffffff;
+  --color-ink: #1a1830;
+  --color-border: #e4e4ee;
+  --color-muted: #6b6a85;
+
+  --font-display: 'Sora', 'Inter', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+
+  --shadow-card: 0 1px 2px rgba(26, 24, 48, 0.04), 0 12px 28px -12px rgba(26, 24, 48, 0.12);
+  --shadow-soft: 0 4px 18px -6px rgba(26, 24, 48, 0.08);
+}
+
+.dark {
+  --color-bg-soft: #131226;
+  --color-surface: #1c1b38;
+  --color-ink: #f3f2fa;
+  --color-border: #2e2c55;
+  --color-muted: #a3a1c2;
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background: #eef1f6;
-  color: #1f2430;
+  min-height: 100vh;
+  background: var(--color-bg-soft);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }
 
 #root {
