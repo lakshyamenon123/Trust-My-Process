@@ -417,18 +417,6 @@ export const monitoring = {
     wifi: 'Strong',
     appVersion: '2.1.0',
   },
-  preferences: [
-    { id: 'screenTime', label: 'Screen time tracking (24/7)', enabled: true },
-    { id: 'appUsage', label: 'App usage by category', enabled: true },
-    { id: 'websites', label: 'Website visits (blocked sites only)', enabled: true },
-    { id: 'content', label: 'Content appropriateness', enabled: true },
-    { id: 'privateBrowsing', label: 'Private browsing attempts', enabled: true },
-    { id: 'excessive', label: 'Excessive usage patterns', enabled: true },
-    { id: 'notifications', label: 'App notifications received', enabled: true },
-    { id: 'messages', label: 'Message content', enabled: false },
-    { id: 'calls', label: 'Call history', enabled: false },
-    { id: 'locationTracking', label: 'Location tracking 24/7', enabled: false },
-  ],
 }
 
 // instant-alert trigger scenarios for the parent-side device simulator —

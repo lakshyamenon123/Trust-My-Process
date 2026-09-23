@@ -1,12 +1,11 @@
 import { Outlet, useNavigate } from 'react-router-dom'
-import { LayoutDashboard, TrendingUp, Activity, MessageSquare, Settings } from 'lucide-react'
+import { LayoutDashboard, TrendingUp, Activity, Settings } from 'lucide-react'
 import AppShell from '@/components/AppShell'
 
 const navItems = [
   { to: '/parent', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/parent/progress', label: 'Progress', icon: TrendingUp },
   { to: '/parent/monitoring', label: 'Monitoring', icon: Activity },
-  { to: '/parent/message', label: 'Message', icon: MessageSquare },
   { to: '/parent/settings', label: 'Settings', icon: Settings },
 ]
 

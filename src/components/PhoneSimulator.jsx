@@ -36,7 +36,7 @@ function ScreenContent({ scenario }) {
   )
 }
 
-export default function PhoneSimulator({ activeScenario, triggers, onTrigger, studentFirstName = 'your child' }) {
+export default function PhoneSimulator({ activeScenario, triggers, onTrigger }) {
   const scenario = triggers.find((t) => t.id === activeScenario) ?? null
   const screen = SCREENS[activeScenario ?? 'idle']
 
@@ -65,7 +65,6 @@ export default function PhoneSimulator({ activeScenario, triggers, onTrigger, st
 
       {/* trigger buttons */}
       <div className="w-full space-y-2">
-        <p className="text-xs font-medium text-muted">Tap a scenario to simulate {studentFirstName}'s device and watch the alert arrive instantly.</p>
         {triggers.map((trigger) => (
           <button
             key={trigger.id}

@@ -1,10 +1,15 @@
 import { NavLink } from 'react-router-dom'
 import { LogOut, GraduationCap } from 'lucide-react'
 import { cn } from '@/lib/cn'
+import { useMonitoring } from '@/context/MonitoringContext'
+import Toast from '@/components/Toast'
 
 export default function AppShell({ navItems, roleLabel, onLogout, children }) {
+  const { toast, dismissToast } = useMonitoring()
+
   return (
     <div className="min-h-screen bg-bg-soft">
+      <Toast toast={toast} onDismiss={dismissToast} />
       {/* Desktop sidebar */}
       <aside className="fixed inset-y-0 left-0 hidden w-64 flex-col border-r border-border/60 bg-surface px-4 py-6 md:flex">
         <div className="flex items-center gap-2 px-2 pb-8">

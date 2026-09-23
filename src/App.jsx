@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { MonitoringProvider } from './context/MonitoringContext'
 import Login from './pages/Login'
 import StudentLayout from './layouts/StudentLayout'
 import ParentLayout from './layouts/ParentLayout'
@@ -13,7 +14,6 @@ import StrengthDetail from './pages/details/StrengthDetail'
 import SkillDetail from './pages/details/SkillDetail'
 import CareerDetail from './pages/details/CareerDetail'
 import ProgressDetail from './pages/ProgressDetail'
-import Message from './pages/parent/Message'
 import Settings from './pages/parent/Settings'
 import Monitoring from './pages/parent/Monitoring'
 
@@ -27,37 +27,38 @@ function RoleRedirect() {
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<RoleRedirect />} />
-        <Route path="/login" element={<Login />} />
+      <MonitoringProvider>
+        <Routes>
+          <Route path="/" element={<RoleRedirect />} />
+          <Route path="/login" element={<Login />} />
 
-        <Route path="/student" element={<StudentLayout />}>
-          <Route index element={<StudentDashboard />} />
-          <Route path="interests" element={<InterestsList />} />
-          <Route path="interests/:id" element={<InterestDetail />} />
-          <Route path="strengths" element={<StrengthsList />} />
-          <Route path="strengths/:id" element={<StrengthDetail />} />
-          <Route path="skills" element={<SkillsList />} />
-          <Route path="skills/:id" element={<SkillDetail />} />
-          <Route path="careers" element={<CareersList />} />
-          <Route path="careers/:id" element={<CareerDetail />} />
-          <Route path="progress" element={<ProgressDetail />} />
-        </Route>
+          <Route path="/student" element={<StudentLayout />}>
+            <Route index element={<StudentDashboard />} />
+            <Route path="interests" element={<InterestsList />} />
+            <Route path="interests/:id" element={<InterestDetail />} />
+            <Route path="strengths" element={<StrengthsList />} />
+            <Route path="strengths/:id" element={<StrengthDetail />} />
+            <Route path="skills" element={<SkillsList />} />
+            <Route path="skills/:id" element={<SkillDetail />} />
+            <Route path="careers" element={<CareersList />} />
+            <Route path="careers/:id" element={<CareerDetail />} />
+            <Route path="progress" element={<ProgressDetail />} />
+          </Route>
 
-        <Route path="/parent" element={<ParentLayout />}>
-          <Route index element={<ParentDashboard />} />
-          <Route path="interest/:id" element={<InterestDetail />} />
-          <Route path="strength/:id" element={<StrengthDetail />} />
-          <Route path="skill/:id" element={<SkillDetail />} />
-          <Route path="career/:id" element={<CareerDetail />} />
-          <Route path="progress" element={<ProgressDetail />} />
-          <Route path="monitoring" element={<Monitoring />} />
-          <Route path="message" element={<Message />} />
-          <Route path="settings" element={<Settings />} />
-        </Route>
+          <Route path="/parent" element={<ParentLayout />}>
+            <Route index element={<ParentDashboard />} />
+            <Route path="interest/:id" element={<InterestDetail />} />
+            <Route path="strength/:id" element={<StrengthDetail />} />
+            <Route path="skill/:id" element={<SkillDetail />} />
+            <Route path="career/:id" element={<CareerDetail />} />
+            <Route path="progress" element={<ProgressDetail />} />
+            <Route path="monitoring" element={<Monitoring />} />
+            <Route path="settings" element={<Settings />} />
+          </Route>
 
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </MonitoringProvider>
     </BrowserRouter>
   )
 }

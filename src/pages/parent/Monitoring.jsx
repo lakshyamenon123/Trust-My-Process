@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import {
-  Ban, Lock, Unlock, MessageSquare, Settings2, RefreshCw, Pause, Smartphone,
+  Ban, Lock, Unlock, Settings2, RefreshCw, Pause, Smartphone,
   Wifi, Battery, MapPin, ShieldCheck, AlertTriangle, Bell, CheckCircle2, Clock,
 } from 'lucide-react'
 import Card from '@/components/Card'
 import PhoneSimulator from '@/components/PhoneSimulator'
-import Toast from '@/components/Toast'
 import { studentProfile, monitoring, alertTriggers } from '@/data/studentData'
 import { badgeStyle } from '@/lib/colors'
+import { useMonitoring } from '@/context/MonitoringContext'
 
 function formatMinutes(mins) {
   const h = Math.floor(mins / 60)
@@ -25,38 +25,15 @@ const ALERT_STYLES = {
 export default function Monitoring() {
   const [locked, setLocked] = useState(false)
   const [paused, setPaused] = useState(false)
-  const [preferences, setPreferences] = useState(monitoring.preferences)
-  const [alerts, setAlerts] = useState(monitoring.alerts)
-  const [activeScenario, setActiveScenario] = useState(null)
-  const [toast, setToast] = useState(null)
+  const { alerts, activeScenario, triggerScenario } = useMonitoring()
 
   const usagePct = Math.round((monitoring.todayUsage.usedMinutes / monitoring.todayUsage.limitMinutes) * 100)
   const remaining = monitoring.todayUsage.limitMinutes - monitoring.todayUsage.usedMinutes
   const maxHourly = Math.max(...monitoring.hourlyBreakdown.map((h) => h.minutes), 1)
   const firstName = studentProfile.name.split(' ')[0]
 
-  function togglePreference(id) {
-    setPreferences((prev) => prev.map((p) => (p.id === id ? { ...p, enabled: !p.enabled } : p)))
-  }
-
-  function handleTrigger(trigger) {
-    setActiveScenario(trigger.id)
-    setAlerts((prev) => [
-      { level: 'active', title: trigger.label, detail: trigger.detail, time: 'Just now' },
-      ...prev,
-    ])
-    setToast({ title: `Instant alert: ${trigger.label}`, detail: trigger.detail })
-  }
-
-  useEffect(() => {
-    if (!toast) return
-    const id = setTimeout(() => setToast(null), 4000)
-    return () => clearTimeout(id)
-  }, [toast])
-
   return (
     <div className="mx-auto max-w-5xl space-y-8 pb-10">
-      <Toast toast={toast} onDismiss={() => setToast(null)} />
       <div>
         <h1 className="font-display text-2xl font-bold text-ink">Live Monitoring</h1>
         <p className="text-sm text-muted">{firstName}'s device, updated in real time.</p>
@@ -114,7 +91,7 @@ export default function Monitoring() {
           </div>
         )}
 
-        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="mt-5 grid grid-cols-3 gap-3">
           <button
             onClick={() => setPaused(false)}
             className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft"
@@ -126,9 +103,6 @@ export default function Monitoring() {
             className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft"
           >
             <Pause className="h-4 w-4 text-primary" /> {paused ? 'Resume' : 'Pause (30 min)'}
-          </button>
-          <button className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft">
-            <MessageSquare className="h-4 w-4 text-accent" /> Message
           </button>
           <button className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft">
             <Settings2 className="h-4 w-4 text-muted" /> App settings
@@ -210,12 +184,7 @@ export default function Monitoring() {
           Trigger a scenario below to see an instant alert land in Monitoring alerts, just like it would on a real device.
         </p>
         <div className="mt-5">
-          <PhoneSimulator
-            activeScenario={activeScenario}
-            triggers={alertTriggers}
-            onTrigger={handleTrigger}
-            studentFirstName={firstName}
-          />
+          <PhoneSimulator activeScenario={activeScenario} triggers={alertTriggers} onTrigger={triggerScenario} />
         </div>
       </Card>
 
@@ -276,32 +245,10 @@ export default function Monitoring() {
         </div>
       </Card>
 
-      {/* Monitoring preferences */}
-      <Card className="p-6">
-        <h2 className="font-display text-base font-semibold text-ink">Monitoring preferences</h2>
-        <p className="text-xs text-muted">Choose what gets tracked on this device.</p>
-        <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
-          {preferences.map((pref) => (
-            <label
-              key={pref.id}
-              className="flex cursor-pointer items-center gap-2.5 rounded-xl bg-bg-soft px-3 py-2.5 text-sm text-ink"
-            >
-              <input
-                type="checkbox"
-                checked={pref.enabled}
-                onChange={() => togglePreference(pref.id)}
-                className="h-4 w-4 rounded border-border text-primary focus:ring-primary"
-              />
-              {pref.label}
-            </label>
-          ))}
-        </div>
-      </Card>
-
       {/* Quick actions */}
       <Card className="p-6">
         <h2 className="font-display text-base font-semibold text-ink">Quick actions</h2>
-        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <div className="mt-4 grid grid-cols-3 gap-3">
           <button
             onClick={() => setLocked((v) => !v)}
             className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft"
@@ -317,9 +264,6 @@ export default function Monitoring() {
           </button>
           <button className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft">
             <RefreshCw className="h-4 w-4 text-accent" /> Refresh
-          </button>
-          <button className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft">
-            <MessageSquare className="h-4 w-4 text-primary-deep" /> Message
           </button>
         </div>
       </Card>
