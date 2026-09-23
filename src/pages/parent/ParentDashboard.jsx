@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom'
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { AreaChart, Area, XAxis, ResponsiveContainer } from 'recharts'
 import { TrendingUp, Award, Zap, Target, ArrowRight, Lightbulb } from 'lucide-react'
 import Card from '@/components/Card'
 import ProgressRing from '@/components/ProgressRing'
 import { studentProfile, interests, strengths, skills, careers, progress } from '@/data/studentData'
+import { badgeStyle } from '@/lib/colors'
 
 function SectionHeader({ title, actionLabel, actionTo }) {
   return (
@@ -17,8 +18,6 @@ function SectionHeader({ title, actionLabel, actionTo }) {
     </div>
   )
 }
-
-const STRENGTH_COLORS = ['bg-primary', 'bg-accent', 'bg-highlight', 'bg-primary-deep']
 
 export default function ParentDashboard() {
   const avgStrength = Math.round(strengths.reduce((sum, s) => sum + s.level, 0) / strengths.length)
@@ -95,18 +94,15 @@ export default function ParentDashboard() {
         <SectionHeader title="Progress over time" actionLabel="Details" actionTo="/parent/progress" />
         <div className="h-48 w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={progress.weeklyTrend} margin={{ left: -20, right: 10, top: 10, bottom: 0 }}>
+            <AreaChart data={progress.weeklyTrend} margin={{ left: 0, right: 0, top: 10, bottom: 0 }}>
               <defs>
                 <linearGradient id="parentTrendFill" x1="0" y1="0" x2="0" y2="1">
                   <stop offset="0%" stopColor="#5145cd" stopOpacity={0.35} />
                   <stop offset="100%" stopColor="#5145cd" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e4e4ee" />
               <XAxis dataKey="week" tick={{ fontSize: 12, fill: '#6b6a85' }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 12, fill: '#6b6a85' }} axisLine={false} tickLine={false} width={32} />
-              <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #e4e4ee', fontSize: 12 }} />
-              <Area type="monotone" dataKey="score" stroke="#5145cd" strokeWidth={2} fill="url(#parentTrendFill)" />
+              <Area type="monotone" dataKey="score" stroke="#5145cd" strokeWidth={2.5} fill="url(#parentTrendFill)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -116,20 +112,20 @@ export default function ParentDashboard() {
       <Card className="p-6">
         <SectionHeader title="Child's Interests" />
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-          {interests.map(({ id, title, icon: Icon, level, category }) => (
+          {interests.map(({ id, title, icon: Icon, level, category, color }) => (
             <Link
               key={id}
               to={`/parent/interest/${id}`}
               className="flex items-center gap-3 rounded-xl bg-bg-soft p-4 transition-colors hover:bg-primary/5"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl" style={badgeStyle(color)}>
                 <Icon className="h-5 w-5" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-semibold text-ink">{title}</p>
                 <p className="text-xs text-muted">{category}</p>
               </div>
-              <ProgressRing value={level} size={36} strokeWidth={4} showLabel={false} />
+              <ProgressRing value={level} size={36} strokeWidth={4} color={color} showLabel={false} />
             </Link>
           ))}
         </div>
@@ -139,7 +135,7 @@ export default function ParentDashboard() {
       <Card className="p-6">
         <SectionHeader title="Strengths & Talents" />
         <div className="space-y-4">
-          {strengths.map(({ id, subject, level, delta }, index) => (
+          {strengths.map(({ id, subject, level, delta, color }) => (
             <Link key={id} to={`/parent/strength/${id}`} className="block">
               <div className="flex items-center justify-between text-sm">
                 <span className="font-medium text-ink">{subject}</span>
@@ -148,10 +144,7 @@ export default function ParentDashboard() {
                 </span>
               </div>
               <div className="mt-1.5 h-1.5 w-full overflow-hidden rounded-full bg-bg-soft">
-                <div
-                  className={`h-full rounded-full ${STRENGTH_COLORS[index % STRENGTH_COLORS.length]}`}
-                  style={{ width: `${level}%` }}
-                />
+                <div className="h-full rounded-full" style={{ width: `${level}%`, backgroundColor: color }} />
               </div>
             </Link>
           ))}
@@ -162,13 +155,13 @@ export default function ParentDashboard() {
       <Card className="p-6">
         <SectionHeader title="Skills Development" />
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {skills.map(({ id, name, icon: Icon, level }) => (
+          {skills.map(({ id, name, icon: Icon, level, color }) => (
             <Link
               key={id}
               to={`/parent/skill/${id}`}
               className="flex items-center gap-3 rounded-xl bg-bg-soft p-4 transition-colors hover:bg-primary/5"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-highlight/10 text-highlight">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl" style={badgeStyle(color)}>
                 <Icon className="h-5 w-5" />
               </div>
               <div className="min-w-0 flex-1">
@@ -184,20 +177,20 @@ export default function ParentDashboard() {
       <Card className="p-6">
         <SectionHeader title="Career Interests" />
         <div className="space-y-2">
-          {careers.map(({ id, title, icon: Icon, category, matchPct, salaryRange }) => (
+          {careers.map(({ id, title, icon: Icon, category, matchPct, avgSalary, color }) => (
             <Link
               key={id}
               to={`/parent/career/${id}`}
               className="flex items-center gap-3 rounded-xl bg-bg-soft p-4 transition-colors hover:bg-primary/5"
             >
-              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary-deep/10 text-primary-deep">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl" style={badgeStyle(color)}>
                 <Icon className="h-5 w-5" />
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-semibold text-ink">{title}</p>
-                <p className="text-xs text-muted">{category} · {salaryRange}</p>
+                <p className="text-xs text-muted">{category} · {avgSalary}</p>
               </div>
-              <span className="text-sm font-semibold text-accent">{matchPct}%</span>
+              <span className="text-sm font-semibold" style={{ color }}>{matchPct}%</span>
             </Link>
           ))}
         </div>
@@ -207,9 +200,9 @@ export default function ParentDashboard() {
       <Card className="p-6">
         <SectionHeader title="Activities & Achievements" />
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          {progress.achievements.map(({ title, icon: Icon, date }) => (
+          {progress.achievements.map(({ title, icon: Icon, date, color }) => (
             <div key={title} className="flex flex-col items-center gap-2 rounded-xl bg-bg-soft p-4 text-center">
-              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-highlight/10 text-highlight">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full" style={badgeStyle(color)}>
                 <Icon className="h-5 w-5" />
               </div>
               <p className="text-xs font-semibold text-ink">{title}</p>
@@ -226,15 +219,12 @@ export default function ParentDashboard() {
           Personalized Insights
         </h2>
         <div className="mt-4 space-y-3">
-          {progress.recommendations.map(({ title, description, icon: Icon }) => (
-            <div key={title} className="flex items-start gap-3 rounded-xl bg-bg-soft p-3">
+          {progress.recommendations.map(({ text, icon: Icon }) => (
+            <div key={text} className="flex items-center gap-3 rounded-xl bg-bg-soft p-3">
               <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                 <Icon className="h-4 w-4" />
               </div>
-              <div>
-                <p className="text-sm font-semibold text-ink">{title}</p>
-                <p className="text-xs text-muted">{description}</p>
-              </div>
+              <p className="text-sm font-medium text-ink">{text}</p>
             </div>
           ))}
         </div>

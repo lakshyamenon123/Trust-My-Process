@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import Card from '@/components/Card'
 import { skills } from '@/data/studentData'
+import { badgeStyle } from '@/lib/colors'
 
 export default function SkillsList() {
   return (
@@ -12,11 +13,11 @@ export default function SkillsList() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-        {skills.map(({ id, name, icon: Icon, level, category, description }) => (
+        {skills.map(({ id, name, icon: Icon, level, category, description, color }) => (
           <Link key={id} to={`/student/skills/${id}`}>
             <Card className="p-5 transition-transform hover:-translate-y-0.5">
               <div className="flex items-start justify-between">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-highlight/10 text-highlight">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl" style={badgeStyle(color)}>
                   <Icon className="h-5 w-5" />
                 </div>
                 <ArrowRight className="h-4 w-4 text-muted" />
@@ -27,7 +28,7 @@ export default function SkillsList() {
               </div>
               <p className="mt-1 text-xs text-muted line-clamp-2">{description}</p>
               <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-bg-soft">
-                <div className="h-full rounded-full bg-highlight" style={{ width: `${level}%` }} />
+                <div className="h-full rounded-full" style={{ width: `${level}%`, backgroundColor: color }} />
               </div>
             </Card>
           </Link>

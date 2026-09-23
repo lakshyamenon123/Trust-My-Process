@@ -4,6 +4,7 @@ export default function ProgressRing({
   strokeWidth = 8,
   trackClass = 'stroke-border',
   progressClass = 'stroke-primary',
+  color,
   showLabel = true,
   children,
 }) {
@@ -23,10 +24,10 @@ export default function ProgressRing({
           strokeWidth={strokeWidth}
           fill="none"
           strokeLinecap="round"
-          className={progressClass}
+          className={color ? undefined : progressClass}
           strokeDasharray={circumference}
           strokeDashoffset={offset}
-          style={{ transition: 'stroke-dashoffset 0.6s ease' }}
+          style={{ transition: 'stroke-dashoffset 0.6s ease', stroke: color }}
         />
       </svg>
       {showLabel && (

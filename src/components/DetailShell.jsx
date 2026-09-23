@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom'
 import { ArrowLeft } from 'lucide-react'
 import { cn } from '@/lib/cn'
+import { badgeStyle } from '@/lib/colors'
 
-export default function DetailShell({ icon: Icon, title, subtitle, accent = 'bg-primary/10 text-primary', children }) {
+export default function DetailShell({ icon: Icon, title, subtitle, accent = 'bg-primary/10 text-primary', color, children }) {
   const navigate = useNavigate()
 
   return (
@@ -15,7 +16,10 @@ export default function DetailShell({ icon: Icon, title, subtitle, accent = 'bg-
       </button>
 
       <div className="flex items-center gap-4">
-        <div className={cn('flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl', accent)}>
+        <div
+          className={cn('flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl', !color && accent)}
+          style={color ? badgeStyle(color) : undefined}
+        >
           {Icon && <Icon className="h-7 w-7" />}
         </div>
         <div>

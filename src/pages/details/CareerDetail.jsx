@@ -4,6 +4,7 @@ import DetailShell from '@/components/DetailShell'
 import Card from '@/components/Card'
 import ProgressRing from '@/components/ProgressRing'
 import { careers, skills, findById } from '@/data/studentData'
+import { badgeStyle } from '@/lib/colors'
 
 export default function CareerDetail() {
   const { id } = useParams()
@@ -16,18 +17,18 @@ export default function CareerDetail() {
   const related = item.relatedSkills.map((sid) => findById(skills, sid)).filter(Boolean)
 
   return (
-    <DetailShell icon={item.icon} title={item.title} subtitle="Career match" accent="bg-primary-deep/10 text-primary-deep">
+    <DetailShell icon={item.icon} title={item.title} subtitle="Career match" color={item.color}>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto]">
         <Card className="p-6">
           <h2 className="font-display text-base font-semibold text-ink">Overview</h2>
           <p className="mt-2 text-sm text-muted">{item.description}</p>
-          <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
+          <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold" style={{ color: item.color }}>
             <DollarSign className="h-4 w-4" />
-            {item.salaryRange}
+            {item.avgSalary}
           </p>
         </Card>
         <Card className="flex flex-col items-center justify-center p-6">
-          <ProgressRing value={item.matchPct} size={88} progressClass="stroke-primary-deep" />
+          <ProgressRing value={item.matchPct} size={88} color={item.color} />
           <p className="mt-2 text-xs font-medium text-muted">Match score</p>
         </Card>
       </div>
@@ -37,7 +38,7 @@ export default function CareerDetail() {
         <ul className="mt-3 space-y-2">
           {item.dayInLife.map((d) => (
             <li key={d} className="flex items-start gap-2 text-sm text-ink">
-              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-primary-deep" />
+              <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: item.color }} />
               {d}
             </li>
           ))}
@@ -49,7 +50,10 @@ export default function CareerDetail() {
         <ol className="mt-3 space-y-3">
           {item.suggestedPath.map((step, i) => (
             <li key={step} className="flex items-start gap-3 text-sm text-ink">
-              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-deep/10 text-xs font-bold text-primary-deep">
+              <span
+                className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold"
+                style={badgeStyle(item.color)}
+              >
                 {i + 1}
               </span>
               <span className="pt-0.5">{step}</span>

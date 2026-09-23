@@ -16,7 +16,7 @@ export default function StrengthDetail() {
   const related = item.relatedCareers.map((cid) => findById(careers, cid)).filter(Boolean)
 
   return (
-    <DetailShell icon={item.icon} title={item.subject} subtitle="Strength" accent="bg-accent/10 text-accent">
+    <DetailShell icon={item.icon} title={item.subject} subtitle="Strength" color={item.color}>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto]">
         <Card className="p-6">
           <h2 className="font-display text-base font-semibold text-ink">Overview</h2>
@@ -24,10 +24,11 @@ export default function StrengthDetail() {
           <p className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-accent">
             {item.trend === 'up' ? <TrendingUp className="h-3.5 w-3.5" /> : <Minus className="h-3.5 w-3.5" />}
             {item.trend === 'up' ? 'Trending up' : 'Holding steady'}
+            {item.delta ? ` (+${item.delta})` : ''}
           </p>
         </Card>
         <Card className="flex flex-col items-center justify-center p-6">
-          <ProgressRing value={item.level} size={88} progressClass="stroke-accent" />
+          <ProgressRing value={item.level} size={88} color={item.color} />
           <p className="mt-2 text-xs font-medium text-muted">Performance</p>
         </Card>
       </div>

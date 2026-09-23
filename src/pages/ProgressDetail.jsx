@@ -1,4 +1,4 @@
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { AreaChart, Area, XAxis, ResponsiveContainer } from 'recharts'
 import Card from '@/components/Card'
 import ProgressRing from '@/components/ProgressRing'
 import { progress } from '@/data/studentData'
@@ -21,18 +21,15 @@ export default function ProgressDetail() {
           <h2 className="font-display text-base font-semibold text-ink">Weekly trend</h2>
           <div className="mt-4 h-48 w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={progress.weeklyTrend} margin={{ left: -20, right: 10, top: 10, bottom: 0 }}>
+              <AreaChart data={progress.weeklyTrend} margin={{ left: 0, right: 0, top: 10, bottom: 0 }}>
                 <defs>
                   <linearGradient id="trendFill" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="#5145cd" stopOpacity={0.35} />
                     <stop offset="100%" stopColor="#5145cd" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e4e4ee" />
                 <XAxis dataKey="week" tick={{ fontSize: 12, fill: '#6b6a85' }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 12, fill: '#6b6a85' }} axisLine={false} tickLine={false} width={32} />
-                <Tooltip contentStyle={{ borderRadius: 12, border: '1px solid #e4e4ee', fontSize: 12 }} />
-                <Area type="monotone" dataKey="score" stroke="#5145cd" strokeWidth={2} fill="url(#trendFill)" />
+                <Area type="monotone" dataKey="score" stroke="#5145cd" strokeWidth={2.5} fill="url(#trendFill)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>

@@ -164,15 +164,12 @@ export default function StudentDashboard() {
             Personalized for you
           </h2>
           <div className="mt-4 space-y-3">
-            {progress.recommendations.map(({ title, description, icon: Icon }) => (
-              <div key={title} className="flex items-start gap-3 rounded-xl bg-bg-soft p-3">
+            {progress.recommendations.map(({ text, icon: Icon }) => (
+              <div key={text} className="flex items-center gap-3 rounded-xl bg-bg-soft p-3">
                 <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary/10 text-primary">
                   <Icon className="h-4 w-4" />
                 </div>
-                <div>
-                  <p className="text-sm font-semibold text-ink">{title}</p>
-                  <p className="text-xs text-muted">{description}</p>
-                </div>
+                <p className="text-sm font-medium text-ink">{text}</p>
               </div>
             ))}
           </div>

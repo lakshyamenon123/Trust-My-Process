@@ -16,14 +16,14 @@ export default function SkillDetail() {
   const related = careers.filter((c) => c.relatedSkills.includes(item.id))
 
   return (
-    <DetailShell icon={item.icon} title={item.name} subtitle={item.category} accent="bg-highlight/10 text-highlight">
+    <DetailShell icon={item.icon} title={item.name} subtitle={item.category} color={item.color}>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto]">
         <Card className="p-6">
           <h2 className="font-display text-base font-semibold text-ink">Overview</h2>
           <p className="mt-2 text-sm text-muted">{item.description}</p>
         </Card>
         <Card className="flex flex-col items-center justify-center p-6">
-          <ProgressRing value={item.level} size={88} progressClass="stroke-highlight" />
+          <ProgressRing value={item.level} size={88} color={item.color} />
           <p className="mt-2 text-xs font-medium text-muted">Skill level</p>
         </Card>
       </div>
