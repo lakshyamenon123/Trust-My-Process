@@ -16,7 +16,7 @@ export default function StrengthDetail() {
   const related = item.relatedCareers.map((cid) => findById(careers, cid)).filter(Boolean)
 
   return (
-    <DetailShell icon={item.icon} title={item.subject} subtitle="Strength" color={item.color}>
+    <DetailShell icon={item.icon} title={item.subject} subtitle={item.category} color={item.color}>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-[1fr_auto]">
         <Card className="p-6">
           <h2 className="font-display text-base font-semibold text-ink">Overview</h2>
