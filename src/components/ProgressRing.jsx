@@ -4,6 +4,7 @@ export default function ProgressRing({
   strokeWidth = 8,
   trackClass = 'stroke-border',
   progressClass = 'stroke-primary',
+  showLabel = true,
   children,
 }) {
   const radius = (size - strokeWidth) / 2
@@ -28,9 +29,11 @@ export default function ProgressRing({
           style={{ transition: 'stroke-dashoffset 0.6s ease' }}
         />
       </svg>
-      <div className="absolute inset-0 flex items-center justify-center">
-        {children ?? <span className="font-display font-bold">{clamped}%</span>}
-      </div>
+      {showLabel && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          {children ?? <span className="font-display font-bold">{clamped}%</span>}
+        </div>
+      )}
     </div>
   )
 }

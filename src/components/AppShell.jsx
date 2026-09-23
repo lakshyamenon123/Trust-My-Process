@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom'
-import { LogOut } from 'lucide-react'
+import { LogOut, GraduationCap } from 'lucide-react'
 import { cn } from '@/lib/cn'
 
 export default function AppShell({ navItems, roleLabel, onLogout, children }) {
@@ -9,7 +9,7 @@ export default function AppShell({ navItems, roleLabel, onLogout, children }) {
       <aside className="fixed inset-y-0 left-0 hidden w-64 flex-col border-r border-border/60 bg-surface px-4 py-6 md:flex">
         <div className="flex items-center gap-2 px-2 pb-8">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-accent">
-            <span className="font-display text-sm font-bold text-white">TP</span>
+            <GraduationCap className="h-5 w-5 text-white" />
           </div>
           <div>
             <p className="font-display text-sm font-bold leading-tight text-ink">Trust the Process</p>
@@ -46,7 +46,7 @@ export default function AppShell({ navItems, roleLabel, onLogout, children }) {
       <header className="sticky top-0 z-20 flex items-center justify-between border-b border-border/60 bg-surface/90 px-4 py-3 backdrop-blur md:hidden">
         <div className="flex items-center gap-2">
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
-            <span className="font-display text-xs font-bold text-white">TP</span>
+            <GraduationCap className="h-4 w-4 text-white" />
           </div>
           <span className="font-display text-sm font-bold text-ink">Trust the Process</span>
         </div>

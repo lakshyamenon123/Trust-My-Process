@@ -22,6 +22,7 @@ export const interests = [
     id: 'robotics',
     title: 'Robotics',
     icon: Cpu,
+    category: 'STEM',
     level: 88,
     summary: 'Building and programming machines that move and think.',
     description:
@@ -41,6 +42,7 @@ export const interests = [
     id: 'creative-writing',
     title: 'Creative Writing',
     icon: PenTool,
+    category: 'Arts',
     level: 74,
     summary: 'Short stories, worldbuilding, and a growing habit of journaling.',
     description:
@@ -59,6 +61,7 @@ export const interests = [
     id: 'basketball',
     title: 'Basketball',
     icon: Trophy,
+    category: 'Activities',
     level: 66,
     summary: 'Point guard on the JV team, consistent at practice.',
     description: 'Plays point guard on the junior varsity team and rarely misses a practice.',
@@ -70,6 +73,7 @@ export const interests = [
     id: 'video-editing',
     title: 'Video Editing',
     icon: Video,
+    category: 'Arts',
     level: 70,
     summary: 'Edits highlight reels and short films for fun and for friends.',
     description: 'Self-taught in video editing software, regularly edits clips for the basketball team and friends\' projects.',
@@ -81,6 +85,7 @@ export const interests = [
     id: 'astronomy',
     title: 'Astronomy',
     icon: Telescope,
+    category: 'STEM',
     level: 60,
     summary: 'Backyard stargazing that turned into a real curiosity about space.',
     description: 'Got a telescope last year and has kept a log of observations since — now reads about astrophysics for fun.',
@@ -96,6 +101,7 @@ export const strengths = [
     subject: 'Mathematics',
     icon: Calculator,
     level: 88,
+    delta: 8,
     trend: 'up',
     description: 'Consistently strong across algebra and early geometry, with especially fast progress this term.',
     evidence: ['Top decile on the fall district math assessment', 'A average across the semester', 'Tutors a younger student in algebra'],
@@ -106,6 +112,7 @@ export const strengths = [
     subject: 'Science',
     icon: FlaskConical,
     level: 82,
+    delta: 5,
     trend: 'up',
     description: 'Strong grasp of physical science concepts, especially in lab settings where Alex takes initiative.',
     evidence: ['Science fair project scored in the top 3 of the grade', 'Frequently leads lab groups'],
@@ -116,6 +123,7 @@ export const strengths = [
     subject: 'English',
     icon: BookOpen,
     level: 74,
+    delta: 3,
     trend: 'steady',
     description: 'Solid writer with a strong voice; reading comprehension is a growth area for next term.',
     evidence: ['Two pieces published in the literary magazine', 'B+ average, improving steadily'],
@@ -176,6 +184,7 @@ export const careers = [
     id: 'software-engineer',
     title: 'Software Engineer',
     icon: Code2,
+    category: 'Technology',
     matchPct: 91,
     salaryRange: '$85k – $160k',
     description:
@@ -197,6 +206,7 @@ export const careers = [
     id: 'game-designer',
     title: 'Game Designer',
     icon: Gamepad2,
+    category: 'Design',
     matchPct: 78,
     salaryRange: '$65k – $120k',
     description:
@@ -217,6 +227,7 @@ export const careers = [
     id: 'data-scientist',
     title: 'Data Scientist',
     icon: LineChart,
+    category: 'Science',
     matchPct: 72,
     salaryRange: '$90k – $165k',
     description:
@@ -238,11 +249,11 @@ export const careers = [
 export const progress = {
   overall: 74,
   subjects: [
-    { name: 'Mathematics', level: 88 },
-    { name: 'Science', level: 82 },
-    { name: 'English', level: 74 },
-    { name: 'Technology', level: 92 },
-    { name: 'Communication', level: 70 },
+    { name: 'Mathematics', level: 88, delta: 8 },
+    { name: 'Science', level: 82, delta: 5 },
+    { name: 'English', level: 74, delta: 3 },
+    { name: 'Technology', level: 92, delta: 6 },
+    { name: 'Communication', level: 70, delta: 4 },
   ],
   weeklyTrend: [
     { week: 'W1', score: 62 },
@@ -251,12 +262,6 @@ export const progress = {
     { week: 'W4', score: 70 },
     { week: 'W5', score: 71 },
     { week: 'W6', score: 74 },
-  ],
-  milestones: [
-    { date: 'Sep 2026', title: 'Joined the robotics club', description: 'Started building the line-following robot.' },
-    { date: 'Oct 2026', title: 'Published first short story', description: 'Featured in the school literary magazine.' },
-    { date: 'Nov 2026', title: 'Regional showcase, 2nd place', description: 'Robotics team placed 2nd at the district showcase.' },
-    { date: 'Dec 2026', title: 'Named "Most Improved"', description: 'Recognized at the JV basketball season banquet.' },
   ],
   achievements: [
     { title: 'Science Fair — Top 3', icon: FlaskConical, date: 'Nov 2026' },

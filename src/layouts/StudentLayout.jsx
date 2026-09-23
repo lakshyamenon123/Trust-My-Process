@@ -3,7 +3,7 @@ import { LayoutDashboard, Sparkles, Star, Zap, Briefcase, TrendingUp } from 'luc
 import AppShell from '@/components/AppShell'
 
 const navItems = [
-  { to: '/student', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/student', label: 'Home', icon: LayoutDashboard },
   { to: '/student/interests', label: 'Interests', icon: Sparkles },
   { to: '/student/strengths', label: 'Strengths', icon: Star },
   { to: '/student/skills', label: 'Skills', icon: Zap },
