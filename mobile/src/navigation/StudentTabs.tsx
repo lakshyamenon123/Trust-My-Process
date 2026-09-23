@@ -4,6 +4,7 @@ import StudentDashboardScreen from '../screens/student/StudentDashboardScreen'
 import ExploreScreen from '../screens/student/ExploreScreen'
 import ProgressScreen from '../screens/ProgressScreen'
 import LogoutButton from '../components/LogoutButton'
+import Logo from '../components/Logo'
 import { colors, fonts } from '../theme'
 import type { StudentTabParamList } from './types'
 
@@ -16,6 +17,7 @@ export default function StudentTabs() {
         headerStyle: { backgroundColor: colors.primaryDeep },
         headerTintColor: colors.white,
         headerTitleStyle: { fontFamily: fonts.displaySemibold, fontSize: 17 },
+        headerTitle: () => <Logo size={26} />,
         headerRight: () => <LogoutButton />,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.muted,

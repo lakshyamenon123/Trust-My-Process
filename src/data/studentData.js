@@ -4,6 +4,7 @@ import {
   Puzzle, Mic, BarChart3, Users2,
   Cog, Palette, FlaskConical,
   Zap, Award, Rocket, Star, Lightbulb, GraduationCap,
+  Music2, Camera, PlayCircle, MessageSquare,
 } from 'lucide-react'
 
 // single source of truth for every page — swap this module for real API
@@ -13,6 +14,8 @@ const GREEN = '#0fb67d'
 const ORANGE = '#ff8a5b'
 const VIOLET = '#8b5cf6'
 const BLUE = '#3b82f6'
+const RED = '#ef4444'
+const PINK = '#ec4899'
 
 export const studentProfile = {
   name: 'Sarah Chen',
@@ -363,6 +366,67 @@ export const progress = {
     { icon: Lightbulb, text: 'Try a beginner machine learning project to channel your AI interest.' },
     { icon: GraduationCap, text: 'Consider an advanced math course to stretch your strongest subject.' },
     { icon: Mic, text: 'Join a debate club to build public speaking confidence.' },
+  ],
+}
+
+// mock data for the live device-monitoring view — separate from the
+// interests/strengths/skills/careers model above, all values are static demo data
+export const monitoring = {
+  device: { name: "Sarah's iPhone", status: 'online', lastSync: 'Just now' },
+  currentActivity: {
+    appName: 'TikTok',
+    icon: Music2,
+    color: RED,
+    timeThisSession: '45 min',
+    openedAt: '2:15 PM',
+    category: 'Social Media · Video',
+    contentStatus: 'Appropriate',
+  },
+  todayUsage: {
+    usedMinutes: 285,
+    limitMinutes: 480,
+    projectedLimitTime: '8:30 PM',
+  },
+  appsToday: [
+    { name: 'TikTok', icon: Music2, color: RED, minutes: 140, pct: 49, sessions: 3 },
+    { name: 'Instagram', icon: Camera, color: PINK, minutes: 90, pct: 32, sessions: 2 },
+    { name: 'YouTube', icon: PlayCircle, color: RED, minutes: 45, pct: 16, sessions: 1 },
+    { name: 'Other', icon: MessageSquare, color: BLUE, minutes: 10, pct: 3, sessions: 1 },
+  ],
+  hourlyBreakdown: [
+    { hour: '8am', minutes: 15 },
+    { hour: '9am', minutes: 0 },
+    { hour: '10am', minutes: 30 },
+    { hour: '11am', minutes: 0 },
+    { hour: '12pm', minutes: 0 },
+    { hour: '1pm', minutes: 75 },
+    { hour: '2pm', minutes: 45 },
+  ],
+  alerts: [
+    { level: 'active', title: 'Usage warning', detail: '4h 45m of the 8h daily limit used', time: 'Now' },
+    { level: 'recent', title: 'App limit reached — Instagram', detail: 'Reached its 1.5-hour limit and was removed from the home screen', time: '2:45 PM' },
+    { level: 'recent', title: 'Extended session — TikTok', detail: 'Used for 75 minutes straight; a break notification was sent', time: '1:30 PM' },
+    { level: 'cleared', title: 'Private browsing attempt', detail: 'Blocked automatically', time: '10:30 AM' },
+  ],
+  deviceStatus: {
+    connection: 'Online',
+    battery: 87,
+    charging: false,
+    location: 'Home',
+    wifi: 'Strong',
+    appVersion: '2.1.0',
+  },
+  preferences: [
+    { id: 'screenTime', label: 'Screen time tracking (24/7)', enabled: true },
+    { id: 'appUsage', label: 'App usage by category', enabled: true },
+    { id: 'websites', label: 'Website visits (blocked sites only)', enabled: true },
+    { id: 'content', label: 'Content appropriateness', enabled: true },
+    { id: 'privateBrowsing', label: 'Private browsing attempts', enabled: true },
+    { id: 'excessive', label: 'Excessive usage patterns', enabled: true },
+    { id: 'notifications', label: 'App notifications received', enabled: true },
+    { id: 'messages', label: 'Message content', enabled: false },
+    { id: 'calls', label: 'Call history', enabled: false },
+    { id: 'locationTracking', label: 'Location tracking 24/7', enabled: false },
   ],
 }
 

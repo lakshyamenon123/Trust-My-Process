@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { View, Text, Pressable, TextInput, StyleSheet, ScrollView } from 'react-native'
 import type { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { GraduationCap, Users, Sparkles } from 'lucide-react-native'
+import { GraduationCap, Users } from 'lucide-react-native'
 import { colors, fonts } from '../theme'
 import { useSession } from '../context/SessionContext'
+import { LogoMark } from '../components/Logo'
 import type { RootStackParamList, Role } from '../navigation/types'
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Login'>
@@ -22,8 +23,8 @@ export default function LoginScreen({ navigation }: Props) {
   return (
     <ScrollView contentContainerStyle={styles.scroll} style={{ backgroundColor: colors.bgSoft }}>
       <View style={styles.hero}>
-        <View style={styles.logoMark}>
-          <Sparkles size={26} color={colors.white} />
+        <View style={styles.logoWrap}>
+          <LogoMark size={56} />
         </View>
         <Text style={styles.brand}>Trust the Process</Text>
         <Text style={styles.tagline}>See every student's interests, strengths, and growth in one place.</Text>
@@ -96,15 +97,7 @@ function RoleButton({
 const styles = StyleSheet.create({
   scroll: { flexGrow: 1, padding: 24, paddingTop: 72, gap: 32 },
   hero: { alignItems: 'center', gap: 10 },
-  logoMark: {
-    width: 56,
-    height: 56,
-    borderRadius: 18,
-    backgroundColor: colors.primary,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 4,
-  },
+  logoWrap: { marginBottom: 4 },
   brand: { fontFamily: fonts.display, fontSize: 24, color: colors.ink, textAlign: 'center' },
   tagline: { fontFamily: fonts.body, fontSize: 14, color: colors.muted, textAlign: 'center', maxWidth: 280 },
   card: {

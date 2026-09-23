@@ -3,6 +3,7 @@ import { Home, LineChart } from 'lucide-react-native'
 import ParentDashboardScreen from '../screens/parent/ParentDashboardScreen'
 import ProgressScreen from '../screens/ProgressScreen'
 import LogoutButton from '../components/LogoutButton'
+import Logo from '../components/Logo'
 import { colors, fonts } from '../theme'
 import type { ParentTabParamList } from './types'
 
@@ -15,6 +16,7 @@ export default function ParentTabs() {
         headerStyle: { backgroundColor: colors.primaryDeep },
         headerTintColor: colors.white,
         headerTitleStyle: { fontFamily: fonts.displaySemibold, fontSize: 17 },
+        headerTitle: () => <Logo size={26} />,
         headerRight: () => <LogoutButton />,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.muted,

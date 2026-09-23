@@ -15,6 +15,7 @@ import CareerDetail from './pages/details/CareerDetail'
 import ProgressDetail from './pages/ProgressDetail'
 import Message from './pages/parent/Message'
 import Settings from './pages/parent/Settings'
+import Monitoring from './pages/parent/Monitoring'
 
 function RoleRedirect() {
   const role = localStorage.getItem('ttp_role')
@@ -50,6 +51,7 @@ export default function App() {
           <Route path="skill/:id" element={<SkillDetail />} />
           <Route path="career/:id" element={<CareerDetail />} />
           <Route path="progress" element={<ProgressDetail />} />
+          <Route path="monitoring" element={<Monitoring />} />
           <Route path="message" element={<Message />} />
           <Route path="settings" element={<Settings />} />
         </Route>
