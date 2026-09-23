@@ -5,6 +5,7 @@ import {
   Cog, Palette, FlaskConical,
   Zap, Award, Rocket, Star, Lightbulb, GraduationCap,
   Music2, Camera, PlayCircle, MessageSquare,
+  Timer, Gauge, ShieldAlert, EyeOff, Moon,
 } from 'lucide-react'
 
 // single source of truth for every page — swap this module for real API
@@ -429,6 +430,46 @@ export const monitoring = {
     { id: 'locationTracking', label: 'Location tracking 24/7', enabled: false },
   ],
 }
+
+// instant-alert trigger scenarios for the parent-side device simulator —
+// each maps to a distinct mock "phone screen" state
+export const alertTriggers = [
+  {
+    id: 'app-usage',
+    label: 'App Usage Exceeds 30 Minutes',
+    detail: 'Alert sent when child uses one app for 30+ minutes.',
+    icon: Timer,
+    color: '#ef4444',
+  },
+  {
+    id: 'daily-limit',
+    label: 'Daily Limit Reaches 80%',
+    detail: 'Alert sent when child hits 80% of their daily limit (6.4 of 8 hours).',
+    icon: Gauge,
+    color: '#ff8a5b',
+  },
+  {
+    id: 'blocked-content',
+    label: 'Inappropriate Content Blocked',
+    detail: 'Alert sent instantly when child tries to access blocked content.',
+    icon: ShieldAlert,
+    color: '#ef4444',
+  },
+  {
+    id: 'private-browsing',
+    label: 'Private Browsing Attempted',
+    detail: 'Alert sent instantly when child tries to enable private/incognito mode.',
+    icon: EyeOff,
+    color: '#8b5cf6',
+  },
+  {
+    id: 'late-night',
+    label: 'Late-Night Usage (After 10 PM)',
+    detail: 'Alert sent instantly when child uses the device after bedtime.',
+    icon: Moon,
+    color: '#3b82f6',
+  },
+]
 
 export function findById(list, id) {
   return list.find((item) => item.id === id)

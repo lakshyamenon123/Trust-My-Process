@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
-  Ban, Lock, Unlock, MessageSquare, Settings2, RefreshCw, Pause,
+  Ban, Lock, Unlock, MessageSquare, Settings2, RefreshCw, Pause, Smartphone,
   Wifi, Battery, MapPin, ShieldCheck, AlertTriangle, Bell, CheckCircle2, Clock,
 } from 'lucide-react'
 import Card from '@/components/Card'
-import { studentProfile, monitoring } from '@/data/studentData'
+import PhoneSimulator from '@/components/PhoneSimulator'
+import Toast from '@/components/Toast'
+import { studentProfile, monitoring, alertTriggers } from '@/data/studentData'
 import { badgeStyle } from '@/lib/colors'
 
 function formatMinutes(mins) {
@@ -24,6 +26,9 @@ export default function Monitoring() {
   const [locked, setLocked] = useState(false)
   const [paused, setPaused] = useState(false)
   const [preferences, setPreferences] = useState(monitoring.preferences)
+  const [alerts, setAlerts] = useState(monitoring.alerts)
+  const [activeScenario, setActiveScenario] = useState(null)
+  const [toast, setToast] = useState(null)
 
   const usagePct = Math.round((monitoring.todayUsage.usedMinutes / monitoring.todayUsage.limitMinutes) * 100)
   const remaining = monitoring.todayUsage.limitMinutes - monitoring.todayUsage.usedMinutes
@@ -34,8 +39,24 @@ export default function Monitoring() {
     setPreferences((prev) => prev.map((p) => (p.id === id ? { ...p, enabled: !p.enabled } : p)))
   }
 
+  function handleTrigger(trigger) {
+    setActiveScenario(trigger.id)
+    setAlerts((prev) => [
+      { level: 'active', title: trigger.label, detail: trigger.detail, time: 'Just now' },
+      ...prev,
+    ])
+    setToast({ title: `Instant alert: ${trigger.label}`, detail: trigger.detail })
+  }
+
+  useEffect(() => {
+    if (!toast) return
+    const id = setTimeout(() => setToast(null), 4000)
+    return () => clearTimeout(id)
+  }, [toast])
+
   return (
     <div className="mx-auto max-w-5xl space-y-8 pb-10">
+      <Toast toast={toast} onDismiss={() => setToast(null)} />
       <div>
         <h1 className="font-display text-2xl font-bold text-ink">Live Monitoring</h1>
         <p className="text-sm text-muted">{firstName}'s device, updated in real time.</p>
@@ -179,6 +200,25 @@ export default function Monitoring() {
         </div>
       </Card>
 
+      {/* Demo device simulator */}
+      <Card className="p-6">
+        <h2 className="flex items-center gap-2 font-display text-base font-semibold text-ink">
+          <Smartphone className="h-4 w-4 text-primary" />
+          Try it: simulate {firstName}'s device
+        </h2>
+        <p className="mt-1 text-xs text-muted">
+          Trigger a scenario below to see an instant alert land in Monitoring alerts, just like it would on a real device.
+        </p>
+        <div className="mt-5">
+          <PhoneSimulator
+            activeScenario={activeScenario}
+            triggers={alertTriggers}
+            onTrigger={handleTrigger}
+            studentFirstName={firstName}
+          />
+        </div>
+      </Card>
+
       {/* Alerts */}
       <Card className="p-6">
         <h2 className="flex items-center gap-2 font-display text-base font-semibold text-ink">
@@ -186,8 +226,8 @@ export default function Monitoring() {
           Monitoring alerts
         </h2>
         <div className="mt-4 space-y-3">
-          {monitoring.alerts.map((alert) => (
-            <div key={alert.title} className="flex items-start gap-3 rounded-xl bg-bg-soft p-3">
+          {alerts.map((alert, i) => (
+            <div key={`${alert.title}-${i}`} className="flex items-start gap-3 rounded-xl bg-bg-soft p-3">
               <span className="mt-1 h-2 w-2 shrink-0 rounded-full" style={{ backgroundColor: ALERT_STYLES[alert.level].dot }} />
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-2">
