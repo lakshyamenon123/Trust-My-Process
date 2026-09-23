@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { GraduationCap, Users, Sparkles, TrendingUp, ShieldCheck, ArrowRight } from 'lucide-react'
+import { GraduationCap, Users, Sparkles, TrendingUp, ShieldCheck, ArrowRight, Smartphone } from 'lucide-react'
 
 const FEATURES = [
   { icon: Sparkles, text: 'Discover interests, strengths, and skills as they grow' },
@@ -86,6 +86,21 @@ export default function Login() {
               <div className="min-w-0 flex-1">
                 <p className="font-display text-base font-semibold text-ink">Child View</p>
                 <p className="text-xs text-muted">Interests, strengths, skills, and careers</p>
+              </div>
+              <ArrowRight className="h-4 w-4 shrink-0 text-muted" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => navigate('/phone')}
+              className="flex w-full items-center gap-4 rounded-2xl border border-border/60 bg-surface p-5 text-left shadow-soft transition-transform hover:-translate-y-0.5 hover:border-highlight"
+            >
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-highlight/10 text-highlight">
+                <Smartphone className="h-6 w-6" />
+              </div>
+              <div className="min-w-0 flex-1">
+                <p className="font-display text-base font-semibold text-ink">Phone</p>
+                <p className="text-xs text-muted">Simulate a device and trigger an instant alert</p>
               </div>
               <ArrowRight className="h-4 w-4 shrink-0 text-muted" />
             </button>

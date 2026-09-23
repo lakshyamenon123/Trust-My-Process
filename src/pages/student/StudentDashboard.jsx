@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom'
-import { Flame, Zap, Star, Sparkles, Award, Target, ArrowRight, Lightbulb, Smartphone } from 'lucide-react'
+import { Flame, Zap, Star, Sparkles, Award, Target, ArrowRight, Lightbulb } from 'lucide-react'
 import Card from '@/components/Card'
 import ProgressRing from '@/components/ProgressRing'
-import PhoneSimulator from '@/components/PhoneSimulator'
-import { studentProfile, interests, strengths, skills, careers, progress, alertTriggers } from '@/data/studentData'
-import { useMonitoring } from '@/context/MonitoringContext'
+import { studentProfile, interests, strengths, skills, careers, progress } from '@/data/studentData'
 
 function QuickLinkCard({ to, icon: Icon, accent, title, count, tags }) {
   return (
@@ -37,7 +35,6 @@ export default function StudentDashboard() {
   const avgStrength = Math.round(strengths.reduce((sum, s) => sum + s.level, 0) / strengths.length)
   const topMatch = Math.max(...careers.map((c) => c.matchPct))
   const firstName = studentProfile.name.split(' ')[0]
-  const { activeScenario, triggerScenario } = useMonitoring()
 
   return (
     <div className="mx-auto max-w-5xl space-y-8 pb-10">
@@ -178,20 +175,6 @@ export default function StudentDashboard() {
           </div>
         </Card>
       </div>
-
-      {/* Your device */}
-      <Card className="p-6">
-        <h2 className="flex items-center gap-2 font-display text-base font-semibold text-ink">
-          <Smartphone className="h-4 w-4 text-primary" />
-          Your device
-        </h2>
-        <p className="mt-1 text-xs text-muted">
-          This is what your parent's live monitoring sees. Try a scenario below.
-        </p>
-        <div className="mt-5">
-          <PhoneSimulator activeScenario={activeScenario} triggers={alertTriggers} onTrigger={triggerScenario} />
-        </div>
-      </Card>
     </div>
   )
 }

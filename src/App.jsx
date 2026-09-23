@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { MonitoringProvider } from './context/MonitoringContext'
 import Login from './pages/Login'
+import Phone from './pages/Phone'
 import StudentLayout from './layouts/StudentLayout'
 import ParentLayout from './layouts/ParentLayout'
 import StudentDashboard from './pages/student/StudentDashboard'
@@ -31,6 +32,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<RoleRedirect />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/phone" element={<Phone />} />
 
           <Route path="/student" element={<StudentLayout />}>
             <Route index element={<StudentDashboard />} />

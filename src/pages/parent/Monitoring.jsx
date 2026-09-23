@@ -1,11 +1,10 @@
 import { useState } from 'react'
 import {
-  Ban, Lock, Unlock, Settings2, RefreshCw, Pause, Smartphone,
+  Ban, Lock, Unlock, Settings2, RefreshCw, Pause,
   Wifi, Battery, MapPin, ShieldCheck, AlertTriangle, Bell, CheckCircle2, Clock,
 } from 'lucide-react'
 import Card from '@/components/Card'
-import PhoneSimulator from '@/components/PhoneSimulator'
-import { studentProfile, monitoring, alertTriggers } from '@/data/studentData'
+import { studentProfile, monitoring } from '@/data/studentData'
 import { badgeStyle } from '@/lib/colors'
 import { useMonitoring } from '@/context/MonitoringContext'
 
@@ -25,7 +24,7 @@ const ALERT_STYLES = {
 export default function Monitoring() {
   const [locked, setLocked] = useState(false)
   const [paused, setPaused] = useState(false)
-  const { alerts, activeScenario, triggerScenario } = useMonitoring()
+  const { alerts } = useMonitoring()
 
   const usagePct = Math.round((monitoring.todayUsage.usedMinutes / monitoring.todayUsage.limitMinutes) * 100)
   const remaining = monitoring.todayUsage.limitMinutes - monitoring.todayUsage.usedMinutes
@@ -171,20 +170,6 @@ export default function Monitoring() {
               <span className="text-[10px] text-muted">{h.hour}</span>
             </div>
           ))}
-        </div>
-      </Card>
-
-      {/* Demo device simulator */}
-      <Card className="p-6">
-        <h2 className="flex items-center gap-2 font-display text-base font-semibold text-ink">
-          <Smartphone className="h-4 w-4 text-primary" />
-          Try it: simulate {firstName}'s device
-        </h2>
-        <p className="mt-1 text-xs text-muted">
-          Trigger a scenario below to see an instant alert land in Monitoring alerts, just like it would on a real device.
-        </p>
-        <div className="mt-5">
-          <PhoneSimulator activeScenario={activeScenario} triggers={alertTriggers} onTrigger={triggerScenario} />
         </div>
       </Card>
 
