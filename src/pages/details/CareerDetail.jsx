@@ -1,5 +1,5 @@
 import { useParams, useLocation, Link } from 'react-router-dom'
-import { ArrowRight, DollarSign } from 'lucide-react'
+import { ArrowRight, DollarSign, Compass, GraduationCap } from 'lucide-react'
 import DetailShell from '@/components/DetailShell'
 import Card from '@/components/Card'
 import ProgressRing from '@/components/ProgressRing'
@@ -44,6 +44,52 @@ export default function CareerDetail() {
           ))}
         </ul>
       </Card>
+
+      {item.afterTenth && (
+        <Card className="p-6">
+          <h2 className="flex items-center gap-2 font-display text-base font-semibold text-ink">
+            <Compass className="h-4 w-4" style={{ color: item.color }} />
+            What to choose after 10th
+          </h2>
+          <p className="mt-3 rounded-xl bg-bg-soft p-3 text-sm text-ink">{item.afterTenth}</p>
+        </Card>
+      )}
+
+      {item.educationPath?.length > 0 && (
+        <Card className="p-6">
+          <h2 className="font-display text-base font-semibold text-ink">Education pathway</h2>
+          <ol className="mt-3 space-y-3">
+            {item.educationPath.map((step, i) => (
+              <li key={step} className="flex items-start gap-3 text-sm text-ink">
+                <span
+                  className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold"
+                  style={badgeStyle(item.color)}
+                >
+                  {i + 1}
+                </span>
+                <span className="pt-0.5">{step}</span>
+              </li>
+            ))}
+          </ol>
+        </Card>
+      )}
+
+      {item.topUniversities?.length > 0 && (
+        <Card className="p-6">
+          <h2 className="flex items-center gap-2 font-display text-base font-semibold text-ink">
+            <GraduationCap className="h-4 w-4" style={{ color: item.color }} />
+            Top universities
+          </h2>
+          <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {item.topUniversities.map((uni) => (
+              <div key={uni} className="flex items-center gap-2 rounded-xl bg-bg-soft p-3 text-sm font-medium text-ink">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: item.color }} />
+                {uni}
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
 
       <Card className="p-6">
         <h2 className="font-display text-base font-semibold text-ink">Suggested path</h2>
