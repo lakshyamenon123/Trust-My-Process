@@ -259,7 +259,13 @@ export const careers = [
       'Entry-level Software Engineer role',
       'Specialize (backend, ML, mobile, etc.) with experience',
     ],
-    topUniversities: ['IIT Bombay', 'IIT Delhi', 'BITS Pilani', 'MIT', 'Stanford University'],
+    topUniversities: [
+      { name: 'IIT Bombay', program: 'B.Tech in Computer Science and Engineering' },
+      { name: 'IIT Delhi', program: 'B.Tech in Computer Science and Engineering' },
+      { name: 'BITS Pilani', program: 'B.E. in Computer Science' },
+      { name: 'MIT', program: 'BS in Computer Science and Engineering' },
+      { name: 'Stanford University', program: 'BS in Computer Science' },
+    ],
     relatedSkills: ['python-programming', 'problem-solving'],
   },
   {
@@ -289,7 +295,13 @@ export const careers = [
       'Build a portfolio of data projects and competitions',
       'Entry-level Data Analyst or Data Scientist role',
     ],
-    topUniversities: ['IIT Madras', 'ISI Kolkata', 'Stanford University', 'MIT', 'Carnegie Mellon University'],
+    topUniversities: [
+      { name: 'IIT Madras', program: 'BS in Data Science and Applications' },
+      { name: 'ISI Kolkata', program: 'B.Stat (Bachelor of Statistics)' },
+      { name: 'Stanford University', program: 'BS in Statistics (Data Science track)' },
+      { name: 'MIT', program: 'BS in Statistics and Data Science' },
+      { name: 'Carnegie Mellon University', program: 'BS in Statistics & Machine Learning' },
+    ],
     relatedSkills: ['data-analysis', 'problem-solving'],
   },
   {
@@ -319,7 +331,13 @@ export const careers = [
       'Entry-level Mechanical Engineer role',
       'Professional certification (e.g., PE) for career advancement',
     ],
-    topUniversities: ['IIT Bombay', 'IIT Madras', 'MIT', 'Georgia Institute of Technology', 'Delft University of Technology'],
+    topUniversities: [
+      { name: 'IIT Bombay', program: 'B.Tech in Mechanical Engineering' },
+      { name: 'IIT Madras', program: 'B.Tech in Mechanical Engineering' },
+      { name: 'MIT', program: 'BS in Mechanical Engineering' },
+      { name: 'Georgia Institute of Technology', program: 'BS in Mechanical Engineering' },
+      { name: 'Delft University of Technology', program: 'BSc in Mechanical Engineering' },
+    ],
     relatedSkills: ['problem-solving', 'data-analysis'],
   },
   {
@@ -349,7 +367,13 @@ export const careers = [
       'Internships and a strong personal portfolio',
       'Entry-level Product/UX Designer role',
     ],
-    topUniversities: ['National Institute of Design (NID)', 'IIT Bombay (IDC School of Design)', 'Rhode Island School of Design', 'Parsons School of Design', "Stanford d.school"],
+    topUniversities: [
+      { name: 'National Institute of Design (NID)', program: 'Bachelor of Design (B.Des) in Industrial Design' },
+      { name: 'IIT Bombay (IDC School of Design)', program: 'B.Des in Industrial Design' },
+      { name: 'Rhode Island School of Design', program: 'BFA in Industrial Design' },
+      { name: 'Parsons School of Design', program: 'BFA in Product Design' },
+      { name: 'Stanford University', program: 'BS in Product Design (Joint ME/Art Program)' },
+    ],
     relatedSkills: ['team-collaboration', 'python-programming'],
   },
   {
@@ -379,7 +403,13 @@ export const careers = [
       'Postdoctoral research experience',
       'Research Scientist position at a university, lab, or company',
     ],
-    topUniversities: ['Indian Institute of Science (IISc)', 'IIT Kanpur', 'MIT', 'Caltech', 'University of Cambridge'],
+    topUniversities: [
+      { name: 'Indian Institute of Science (IISc)', program: 'BS (Research) in Physical or Chemical Sciences' },
+      { name: 'IIT Kanpur', program: 'BS in Physics or Chemistry' },
+      { name: 'MIT', program: 'BS in Physics, Chemistry, or Biology' },
+      { name: 'Caltech', program: 'BS in Physics or Chemistry' },
+      { name: 'University of Cambridge', program: 'BA in Natural Sciences' },
+    ],
     relatedSkills: ['data-analysis', 'problem-solving'],
   },
 ]

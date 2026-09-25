@@ -82,9 +82,12 @@ export default function CareerDetail() {
           </h2>
           <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
             {item.topUniversities.map((uni) => (
-              <div key={uni} className="flex items-center gap-2 rounded-xl bg-bg-soft p-3 text-sm font-medium text-ink">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: item.color }} />
-                {uni}
+              <div key={uni.name} className="flex items-start gap-2 rounded-xl bg-bg-soft p-3">
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full" style={{ backgroundColor: item.color }} />
+                <div>
+                  <p className="text-sm font-semibold text-ink">{uni.name}</p>
+                  <p className="text-xs text-muted">{uni.program}</p>
+                </div>
               </div>
             ))}
           </div>
