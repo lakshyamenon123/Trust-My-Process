@@ -6,6 +6,7 @@ import {
   Zap, Award, Rocket, Star, Lightbulb, GraduationCap,
   Music2, Camera, PlayCircle, MessageSquare,
   Timer, Gauge, ShieldAlert, EyeOff, Moon,
+  Paintbrush2, Gamepad2, Box, Boxes, Search, FileText, Image, Wand2,
 } from 'lucide-react'
 
 // single source of truth for every page — swap this module for real API
@@ -45,7 +46,7 @@ export const interests = [
       'Regularly explores new apps and tools independently',
     ],
     projects: [{ title: 'Personal Website', note: 'Built and deployed a portfolio site using HTML and CSS' }],
-    relatedCareers: ['software-engineer', 'research-scientist'],
+    relatedCareers: ['game-designer', 'research-scientist'],
   },
   {
     id: 'ai-coding',
@@ -63,7 +64,7 @@ export const interests = [
       'Watches machine-learning tutorials outside of school',
     ],
     projects: [{ title: 'Class Chatbot', note: 'A rule-based chatbot built for a computer science elective' }],
-    relatedCareers: ['software-engineer', 'data-scientist'],
+    relatedCareers: ['game-designer', 'data-scientist'],
   },
   {
     id: 'mathematics',
@@ -99,7 +100,7 @@ export const interests = [
       'Started composing short original pieces',
     ],
     projects: [],
-    relatedCareers: ['product-designer'],
+    relatedCareers: ['artist', 'product-designer'],
   },
   {
     id: 'sports',
@@ -133,7 +134,7 @@ export const strengths = [
     trend: 'up',
     description: 'Consistently top of the class. Strong algebraic reasoning and impressive problem-solving speed.',
     evidence: ['Top of her math class this term', 'A average across the semester', 'Tutors a classmate in algebra'],
-    relatedCareers: ['software-engineer', 'data-scientist'],
+    relatedCareers: ['game-designer', 'data-scientist'],
   },
   {
     id: 'logical-thinking',
@@ -146,7 +147,7 @@ export const strengths = [
     trend: 'up',
     description: 'Excellent at breaking down complex problems and identifying patterns others miss.',
     evidence: ['Strong performance on logic-based puzzle challenges', 'Debugs her own code independently'],
-    relatedCareers: ['software-engineer', 'research-scientist'],
+    relatedCareers: ['game-designer', 'research-scientist'],
   },
   {
     id: 'reading-comprehension',
@@ -172,7 +173,7 @@ export const strengths = [
     trend: 'up',
     description: 'Expressive and imaginative. A growing storytelling skill with a distinctive voice.',
     evidence: ['Piece featured in the school literary magazine', 'Keeps a regular writing journal'],
-    relatedCareers: ['product-designer'],
+    relatedCareers: ['artist', 'product-designer'],
   },
 ]
 
@@ -231,40 +232,86 @@ export const skills = [
 
 export const careers = [
   {
-    id: 'software-engineer',
-    title: 'Software Engineer',
-    icon: Code2,
-    color: INDIGO,
-    category: 'Technology',
-    matchPct: 88,
-    avgSalary: '$110k avg',
+    id: 'artist',
+    title: 'Artist',
+    icon: Paintbrush2,
+    color: PINK,
+    category: 'Arts',
+    matchPct: 90,
+    avgSalary: '$55k avg',
     description:
-      'Designs and builds software applications. High demand, strong career growth, and endless room to specialize.',
+      'Creates original illustrations, paintings, and digital art. A path built on a strong portfolio more than any single degree.',
     dayInLife: [
-      'Writing and testing code to build new features',
-      'Debugging issues reported by users or teammates',
-      'Collaborating with designers and other engineers on planning',
+      'Sketching and refining original artwork',
+      'Taking client or personal commissions',
+      'Building and updating an online portfolio',
     ],
     suggestedPath: [
-      'Take an intro programming elective next semester',
-      'Join or continue with a coding club',
-      'Build a small personal coding project over the summer',
-      'Look into AP Computer Science for 11th grade',
+      'Practice daily with a sketchbook or a digital art app',
+      'Enter a school or online art competition',
+      'Start building a portfolio of your best pieces',
     ],
-    afterTenth: 'Choose Science with Mathematics (PCM) for 11th–12th — it\'s required for the engineering entrance exams most Computer Science programs ask for.',
+    afterTenth: 'Any stream works — art college admission is based mainly on a strong portfolio and (for some colleges) a design aptitude exam, not on stream.',
     educationPath: [
-      'Science (PCM) in 11th–12th',
-      "Bachelor's in Computer Science or IT (B.Tech/B.E. or BS)",
-      'Internships and personal coding projects during college',
-      'Entry-level Software Engineer role',
-      'Specialize (backend, ML, mobile, etc.) with experience',
+      'Any stream in 11th–12th, plus consistent portfolio-building',
+      'Bachelor of Fine Arts (BFA) or a design foundation course',
+      'Build a strong, focused portfolio in a specific style',
+      'Freelance commissions or an entry-level studio/agency role',
+      'Grow a following and reputation in a chosen niche',
     ],
     topUniversities: [
-      { name: 'IIT Bombay', program: 'B.Tech in Computer Science and Engineering' },
-      { name: 'IIT Delhi', program: 'B.Tech in Computer Science and Engineering' },
-      { name: 'BITS Pilani', program: 'B.E. in Computer Science' },
-      { name: 'MIT', program: 'BS in Computer Science and Engineering' },
-      { name: 'Stanford University', program: 'BS in Computer Science' },
+      { name: 'Rhode Island School of Design', program: 'BFA in Illustration or Painting' },
+      { name: 'National Institute of Design (NID)', program: 'B.Des in Animation Film Design' },
+      { name: 'Srishti Manipal Institute of Art, Design and Technology', program: 'BFA in Visual Arts' },
+      { name: 'Yale School of Art', program: 'BFA in Painting/Printmaking' },
+      { name: 'Slade School of Fine Art (UCL)', program: 'BFA Fine Art' },
+    ],
+    usefulApps: [
+      { name: 'Procreate', description: 'Professional digital painting and illustration app for iPad.', icon: Paintbrush2 },
+      { name: 'Adobe Fresco', description: 'Drawing and painting app with realistic brushes and live watercolors.', icon: Wand2 },
+      { name: 'ArtStation', description: 'Portfolio platform to showcase work and discover other artists.', icon: Image },
+    ],
+    relatedSkills: ['team-collaboration'],
+  },
+  {
+    id: 'game-designer',
+    title: 'Game Designer',
+    icon: Gamepad2,
+    color: INDIGO,
+    category: 'Design',
+    matchPct: 85,
+    avgSalary: '$85k avg',
+    description:
+      'Designs the mechanics, levels, and stories behind games. Blends creativity with technical and programming skill.',
+    dayInLife: [
+      'Prototyping game mechanics and levels',
+      'Playtesting and iterating based on feedback',
+      'Working with artists and programmers to bring a vision to life',
+    ],
+    suggestedPath: [
+      'Build a simple game in Roblox Studio or Scratch',
+      'Enter a school or online game jam',
+      'Keep building both art and coding skills',
+    ],
+    afterTenth: 'Any stream works, but Science or Commerce with strong computer literacy helps most game-design programs — a portfolio of game projects matters more than the stream itself.',
+    educationPath: [
+      'Any stream in 11th–12th, plus self-taught game projects',
+      "Bachelor's in Game Design, Computer Science, or a related field",
+      'Build a portfolio of playable game prototypes',
+      'Internship at a game studio',
+      'Entry-level Game Designer role',
+    ],
+    topUniversities: [
+      { name: 'DigiPen Institute of Technology', program: 'BA in Game Design' },
+      { name: 'University of Southern California', program: 'BA in Interactive Entertainment (Games)' },
+      { name: 'SRM Institute of Science and Technology', program: 'B.Tech in Computer Science (Game Design specialization)' },
+      { name: 'Full Sail University', program: 'BS in Game Design' },
+      { name: 'National Institute of Design (NID)', program: 'B.Des in Game Design' },
+    ],
+    usefulApps: [
+      { name: 'Roblox Studio', description: 'Free, beginner-friendly platform for building and publishing games.', icon: Gamepad2 },
+      { name: 'Unity', description: 'Industry-standard game engine used by professional studios.', icon: Cpu },
+      { name: 'Scratch', description: 'Visual, block-based programming that teaches core game-design logic.', icon: Puzzle },
     ],
     relatedSkills: ['python-programming', 'problem-solving'],
   },
@@ -302,6 +349,11 @@ export const careers = [
       { name: 'MIT', program: 'BS in Statistics and Data Science' },
       { name: 'Carnegie Mellon University', program: 'BS in Statistics & Machine Learning' },
     ],
+    usefulApps: [
+      { name: 'Google Colab', description: 'Free cloud notebooks for practicing Python and data science.', icon: Code2 },
+      { name: 'Kaggle', description: 'Real datasets, beginner tutorials, and data-science competitions.', icon: BarChart3 },
+      { name: 'Google Sheets', description: 'Foundational spreadsheet skills for organizing and analyzing data.', icon: FileText },
+    ],
     relatedSkills: ['data-analysis', 'problem-solving'],
   },
   {
@@ -337,6 +389,11 @@ export const careers = [
       { name: 'MIT', program: 'BS in Mechanical Engineering' },
       { name: 'Georgia Institute of Technology', program: 'BS in Mechanical Engineering' },
       { name: 'Delft University of Technology', program: 'BSc in Mechanical Engineering' },
+    ],
+    usefulApps: [
+      { name: 'Tinkercad', description: 'Free, browser-based 3D design — a friendly first step into CAD.', icon: Box },
+      { name: 'Fusion 360', description: 'Professional-grade CAD software used by real engineers, free for students.', icon: Boxes },
+      { name: 'Khan Academy', description: 'Physics and math fundamentals that underpin mechanical design.', icon: BookOpen },
     ],
     relatedSkills: ['problem-solving', 'data-analysis'],
   },
@@ -374,6 +431,11 @@ export const careers = [
       { name: 'Parsons School of Design', program: 'BFA in Product Design' },
       { name: 'Stanford University', program: 'BS in Product Design (Joint ME/Art Program)' },
     ],
+    usefulApps: [
+      { name: 'Figma', description: 'Industry-standard interface and product design tool.', icon: Palette },
+      { name: 'Canva', description: 'Quick, approachable visual design practice for beginners.', icon: Image },
+      { name: 'Procreate', description: 'Digital sketching and prototyping on iPad.', icon: Paintbrush2 },
+    ],
     relatedSkills: ['team-collaboration', 'python-programming'],
   },
   {
@@ -409,6 +471,11 @@ export const careers = [
       { name: 'MIT', program: 'BS in Physics, Chemistry, or Biology' },
       { name: 'Caltech', program: 'BS in Physics or Chemistry' },
       { name: 'University of Cambridge', program: 'BA in Natural Sciences' },
+    ],
+    usefulApps: [
+      { name: 'Google Scholar', description: 'Search and read real scientific papers for free.', icon: Search },
+      { name: 'Wolfram Alpha', description: 'Computational tool for working through math and science problems.', icon: Calculator },
+      { name: 'Notion', description: 'Organize research notes, reading lists, and lab logs in one place.', icon: FileText },
     ],
     relatedSkills: ['data-analysis', 'problem-solving'],
   },

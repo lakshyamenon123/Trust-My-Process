@@ -1,5 +1,5 @@
 import { useParams, useLocation, Link } from 'react-router-dom'
-import { ArrowRight, DollarSign, Compass, GraduationCap } from 'lucide-react'
+import { ArrowRight, DollarSign, Compass, GraduationCap, Smartphone } from 'lucide-react'
 import DetailShell from '@/components/DetailShell'
 import Card from '@/components/Card'
 import ProgressRing from '@/components/ProgressRing'
@@ -110,6 +110,28 @@ export default function CareerDetail() {
           ))}
         </ol>
       </Card>
+
+      {item.usefulApps?.length > 0 && (
+        <Card className="p-6">
+          <h2 className="flex items-center gap-2 font-display text-base font-semibold text-ink">
+            <Smartphone className="h-4 w-4" style={{ color: item.color }} />
+            Useful apps
+          </h2>
+          <div className="mt-3 space-y-2">
+            {item.usefulApps.map((app) => (
+              <div key={app.name} className="flex items-start gap-3 rounded-xl bg-bg-soft p-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg" style={badgeStyle(item.color)}>
+                  <app.icon className="h-4 w-4" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-ink">{app.name}</p>
+                  <p className="text-xs text-muted">{app.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      )}
 
       {related.length > 0 && (
         <Card className="p-6">
