@@ -1,7 +1,7 @@
 import {
   Cpu, Music,
-  PenTool, Puzzle, Mic, Users2, Palette,
-  Zap, Award, Rocket, Star, Lightbulb, GraduationCap,
+  PenTool, Puzzle, Users2, Palette,
+  Lightbulb, GraduationCap,
   Music2, Camera, PlayCircle, MessageSquare,
   Timer, Gauge, ShieldAlert, EyeOff, Moon,
   Paintbrush2, Gamepad2, Image, Wand2,
@@ -376,15 +376,15 @@ export const progress = {
     { week: 'W7', score: 76 },
   ],
   achievements: [
-    { title: '30-day streak', icon: Zap, color: ORANGE, date: 'This week' },
-    { title: 'Top of math class', icon: Award, color: INDIGO, date: 'Last month' },
-    { title: 'Hackathon finalist', icon: Rocket, color: GREEN, date: 'Jul 2026' },
-    { title: 'Science fair winner', icon: Star, color: VIOLET, date: 'May 2026' },
+    { title: 'Featured in school art show', icon: Palette, color: PINK, date: 'This month' },
+    { title: '50 illustrations milestone', icon: Paintbrush2, color: INDIGO, date: 'Last month' },
+    { title: 'First animation completed', icon: Clapperboard, color: VIOLET, date: 'Jul 2026' },
+    { title: 'Game jam finalist', icon: Gamepad2, color: ORANGE, date: 'May 2026' },
   ],
   recommendations: [
-    { icon: Lightbulb, text: 'Try a beginner machine learning project to channel your AI interest.' },
-    { icon: GraduationCap, text: 'Consider an advanced math course to stretch your strongest subject.' },
-    { icon: Mic, text: 'Join a debate club to build public speaking confidence.' },
+    { icon: Lightbulb, text: 'Try entering a bigger regional or online art competition to challenge yourself.' },
+    { icon: GraduationCap, text: 'Look into a summer portfolio-prep workshop before applying to art programs.' },
+    { icon: Gamepad2, text: 'Join a local or online game jam to practice creating under a deadline.' },
   ],
 }
 

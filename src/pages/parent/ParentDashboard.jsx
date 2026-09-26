@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom'
 import { AreaChart, Area, XAxis, ResponsiveContainer } from 'recharts'
-import { TrendingUp, Award, Zap, Target, ArrowRight, Lightbulb } from 'lucide-react'
+import { TrendingUp, Award, Zap, Target, ArrowRight, Lightbulb, Star } from 'lucide-react'
 import Card from '@/components/Card'
 import ProgressRing from '@/components/ProgressRing'
 import { studentProfile, interests, strengths, skills, careers, progress } from '@/data/studentData'
 import { badgeStyle } from '@/lib/colors'
+import { useAchievements } from '@/hooks/useAchievements'
 
 function SectionHeader({ title, actionLabel, actionTo }) {
   return (
@@ -23,6 +24,7 @@ export default function ParentDashboard() {
   const avgStrength = Math.round(strengths.reduce((sum, s) => sum + s.level, 0) / strengths.length)
   const topMatch = Math.max(...careers.map((c) => c.matchPct))
   const firstName = studentProfile.name.split(' ')[0]
+  const { entries } = useAchievements()
 
   return (
     <div className="mx-auto max-w-5xl space-y-8 pb-10">
@@ -209,7 +211,19 @@ export default function ParentDashboard() {
               <p className="text-[10px] text-muted">{date}</p>
             </div>
           ))}
+          {entries.map((entry) => (
+            <div key={entry.id} className="flex flex-col items-center gap-2 rounded-xl bg-bg-soft p-4 text-center">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Star className="h-5 w-5" />
+              </div>
+              <p className="text-xs font-semibold text-ink">{entry.title}</p>
+              <p className="text-[10px] text-muted">{entry.note || 'Added by ' + firstName}</p>
+            </div>
+          ))}
         </div>
+        {entries.length === 0 && (
+          <p className="mt-3 text-xs text-muted">{firstName} hasn't logged any of their own achievements yet.</p>
+        )}
       </Card>
 
       {/* Insights */}

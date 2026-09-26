@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Flame, Zap, Star, Sparkles, Award, Target, ArrowRight, Lightbulb } from 'lucide-react'
+import { Flame, Zap, Star, Sparkles, Award, Target, ArrowRight, Lightbulb, Plus, X } from 'lucide-react'
 import Card from '@/components/Card'
 import ProgressRing from '@/components/ProgressRing'
 import { studentProfile, interests, strengths, skills, careers, progress } from '@/data/studentData'
+import { useAchievements } from '@/hooks/useAchievements'
 
 function QuickLinkCard({ to, icon: Icon, accent, title, count, tags }) {
   return (
@@ -35,6 +37,19 @@ export default function StudentDashboard() {
   const avgStrength = Math.round(strengths.reduce((sum, s) => sum + s.level, 0) / strengths.length)
   const topMatch = Math.max(...careers.map((c) => c.matchPct))
   const firstName = studentProfile.name.split(' ')[0]
+  const { entries, addEntry, removeEntry } = useAchievements()
+  const [showForm, setShowForm] = useState(false)
+  const [title, setTitle] = useState('')
+  const [note, setNote] = useState('')
+
+  function handleAdd(e) {
+    e.preventDefault()
+    if (!title.trim()) return
+    addEntry(title.trim(), note.trim())
+    setTitle('')
+    setNote('')
+    setShowForm(false)
+  }
 
   return (
     <div className="mx-auto max-w-5xl space-y-8 pb-10">
@@ -57,7 +72,7 @@ export default function StudentDashboard() {
           </span>
           <span className="flex items-center gap-1.5 rounded-full bg-white/15 px-3.5 py-1.5 text-xs font-medium backdrop-blur">
             <Star className="h-3.5 w-3.5" />
-            {progress.achievements.length} achievements
+            {progress.achievements.length + entries.length} achievements
           </span>
         </div>
 
@@ -175,6 +190,76 @@ export default function StudentDashboard() {
           </div>
         </Card>
       </div>
+
+      {/* Achievements & activities */}
+      <Card className="p-6">
+        <div className="flex items-center justify-between">
+          <h2 className="flex items-center gap-2 font-display text-base font-semibold text-ink">
+            <Award className="h-4 w-4 text-primary" />
+            My Achievements & Activities
+          </h2>
+          <button
+            onClick={() => setShowForm((v) => !v)}
+            className="flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary transition-colors hover:bg-primary/20"
+          >
+            {showForm ? <X className="h-3.5 w-3.5" /> : <Plus className="h-3.5 w-3.5" />}
+            {showForm ? 'Cancel' : 'Add new'}
+          </button>
+        </div>
+
+        {showForm && (
+          <form onSubmit={handleAdd} className="mt-4 space-y-2 rounded-xl bg-bg-soft p-4">
+            <input
+              autoFocus
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              placeholder="What did you achieve or do? (e.g. Finished a short comic)"
+              className="w-full rounded-lg border border-border/60 bg-surface px-3 py-2 text-sm text-ink outline-none focus:border-primary"
+            />
+            <input
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
+              placeholder="Add a short note (optional)"
+              className="w-full rounded-lg border border-border/60 bg-surface px-3 py-2 text-sm text-ink outline-none focus:border-primary"
+            />
+            <button
+              type="submit"
+              disabled={!title.trim()}
+              className="rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-transform enabled:hover:-translate-y-0.5 disabled:opacity-40"
+            >
+              Add to my list
+            </button>
+          </form>
+        )}
+
+        <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {progress.achievements.map(({ title, icon: Icon, color, date }) => (
+            <div key={title} className="flex flex-col items-center gap-2 rounded-xl bg-bg-soft p-4 text-center">
+              <div className="flex h-10 w-10 items-center justify-center rounded-full" style={{ backgroundColor: `${color}1a`, color }}>
+                <Icon className="h-5 w-5" />
+              </div>
+              <p className="text-xs font-semibold text-ink">{title}</p>
+              <p className="text-[10px] text-muted">{date}</p>
+            </div>
+          ))}
+          {entries.map((entry) => (
+            <div key={entry.id} className="relative flex flex-col items-center gap-2 rounded-xl bg-bg-soft p-4 text-center">
+              <button
+                onClick={() => removeEntry(entry.id)}
+                className="absolute right-2 top-2 text-muted hover:text-ink"
+                aria-label="Remove"
+              >
+                <X className="h-3.5 w-3.5" />
+              </button>
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <Star className="h-5 w-5" />
+              </div>
+              <p className="text-xs font-semibold text-ink">{entry.title}</p>
+              <p className="text-[10px] text-muted">{entry.note || entry.date}</p>
+            </div>
+          ))}
+        </div>
+      </Card>
     </div>
   )
 }
