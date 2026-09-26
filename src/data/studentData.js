@@ -392,15 +392,6 @@ export const progress = {
 // interests/strengths/skills/careers model above, all values are static demo data
 export const monitoring = {
   device: { name: "Sarah's iPhone", status: 'online', lastSync: 'Just now' },
-  currentActivity: {
-    appName: 'TikTok',
-    icon: Music2,
-    color: RED,
-    timeThisSession: '45 min',
-    openedAt: '2:15 PM',
-    category: 'Social Media · Video',
-    contentStatus: 'Appropriate',
-  },
   todayUsage: {
     usedMinutes: 285,
     limitMinutes: 480,

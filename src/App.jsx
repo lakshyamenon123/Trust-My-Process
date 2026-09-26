@@ -17,6 +17,8 @@ import CareerDetail from './pages/details/CareerDetail'
 import ProgressDetail from './pages/ProgressDetail'
 import Settings from './pages/parent/Settings'
 import Monitoring from './pages/parent/Monitoring'
+import GrowthPlanOverview from './pages/student/GrowthPlanOverview'
+import GrowthPlanDay from './pages/student/GrowthPlanDay'
 
 function RoleRedirect() {
   const role = localStorage.getItem('ttp_role')
@@ -42,6 +44,8 @@ export default function App() {
             <Route path="strengths/:id" element={<StrengthDetail />} />
             <Route path="skills" element={<SkillsList />} />
             <Route path="skills/:id" element={<SkillDetail />} />
+            <Route path="skills/:id/growth-plan" element={<GrowthPlanOverview />} />
+            <Route path="skills/:id/growth-plan/day/:day" element={<GrowthPlanDay />} />
             <Route path="careers" element={<CareersList />} />
             <Route path="careers/:id" element={<CareerDetail />} />
             <Route path="progress" element={<ProgressDetail />} />

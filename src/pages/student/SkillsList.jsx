@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Sparkles } from 'lucide-react'
 import Card from '@/components/Card'
 import { skills } from '@/data/studentData'
 import { badgeStyle } from '@/lib/colors'
@@ -10,6 +11,18 @@ export default function SkillsList() {
         <h1 className="font-display text-2xl font-bold text-ink">Skills & Talents</h1>
         <p className="text-sm text-muted">Skills you're building and the projects that show them.</p>
       </div>
+
+      <Card className="flex items-center gap-4 bg-gradient-to-br from-primary-deep via-primary to-accent p-5 text-white">
+        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white/15">
+          <Sparkles className="h-5 w-5" />
+        </div>
+        <div>
+          <p className="font-display text-base font-semibold">Try a 10-Week Growth Plan</p>
+          <p className="text-xs text-white/80">
+            Pick a skill below to start one — 3 quick questions a day, small steps that build into something bigger.
+          </p>
+        </div>
+      </Card>
 
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {skills.map(({ id, name, icon: Icon, level, category, description, color }) => (

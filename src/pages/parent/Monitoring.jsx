@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import {
-  Ban, Lock, Unlock, Settings2, RefreshCw, Pause,
-  Wifi, Battery, MapPin, ShieldCheck, AlertTriangle, Bell, CheckCircle2, Clock,
+  Lock, Unlock,
+  Wifi, Battery, MapPin, ShieldCheck, Bell, CheckCircle2, Clock,
 } from 'lucide-react'
 import Card from '@/components/Card'
 import { studentProfile, monitoring } from '@/data/studentData'
@@ -23,7 +23,6 @@ const ALERT_STYLES = {
 
 export default function Monitoring() {
   const [locked, setLocked] = useState(false)
-  const [paused, setPaused] = useState(false)
   const { alerts } = useMonitoring()
 
   const usagePct = Math.round((monitoring.todayUsage.usedMinutes / monitoring.todayUsage.limitMinutes) * 100)
@@ -54,59 +53,6 @@ export default function Monitoring() {
           {locked ? <Unlock className="h-4 w-4" /> : <Lock className="h-4 w-4" />}
           {locked ? 'Unlock device' : 'Lock device'}
         </button>
-      </Card>
-
-      {/* Current activity */}
-      <Card className="p-6">
-        <div className="flex items-center justify-between">
-          <h2 className="flex items-center gap-2 font-display text-base font-semibold text-ink">
-            <span className="h-2 w-2 rounded-full bg-red-500" />
-            Currently using
-          </h2>
-          <span className="text-xs text-muted">Updates every 30 sec</span>
-        </div>
-
-        {paused ? (
-          <div className="mt-4 flex items-center gap-3 rounded-xl bg-bg-soft p-4">
-            <Pause className="h-5 w-5 text-highlight" />
-            <p className="text-sm font-medium text-ink">Usage paused for a 30-minute break.</p>
-          </div>
-        ) : (
-          <div className="mt-4 flex items-center gap-4">
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl" style={badgeStyle(monitoring.currentActivity.color)}>
-              <monitoring.currentActivity.icon className="h-7 w-7" />
-            </div>
-            <div className="min-w-0 flex-1">
-              <p className="font-display text-base font-semibold text-ink">{monitoring.currentActivity.appName}</p>
-              <p className="text-xs text-muted">{monitoring.currentActivity.category} · Opened at {monitoring.currentActivity.openedAt}</p>
-              <p className="mt-1 flex items-center gap-1.5 text-xs font-medium text-accent">
-                <CheckCircle2 className="h-3.5 w-3.5" /> {monitoring.currentActivity.contentStatus}
-              </p>
-            </div>
-            <div className="text-right">
-              <p className="font-display text-lg font-bold text-ink">{monitoring.currentActivity.timeThisSession}</p>
-              <p className="text-xs text-muted">this session</p>
-            </div>
-          </div>
-        )}
-
-        <div className="mt-5 grid grid-cols-3 gap-3">
-          <button
-            onClick={() => setPaused(false)}
-            className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft"
-          >
-            <Ban className="h-4 w-4 text-highlight" /> Block app
-          </button>
-          <button
-            onClick={() => setPaused((v) => !v)}
-            className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft"
-          >
-            <Pause className="h-4 w-4 text-primary" /> {paused ? 'Resume' : 'Pause (30 min)'}
-          </button>
-          <button className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft">
-            <Settings2 className="h-4 w-4 text-muted" /> App settings
-          </button>
-        </div>
       </Card>
 
       {/* Today's usage */}
@@ -227,29 +173,6 @@ export default function Monitoring() {
               <p className="text-xs text-muted">App version</p>
             </div>
           </div>
-        </div>
-      </Card>
-
-      {/* Quick actions */}
-      <Card className="p-6">
-        <h2 className="font-display text-base font-semibold text-ink">Quick actions</h2>
-        <div className="mt-4 grid grid-cols-3 gap-3">
-          <button
-            onClick={() => setLocked((v) => !v)}
-            className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft"
-          >
-            {locked ? <Unlock className="h-4 w-4 text-highlight" /> : <Lock className="h-4 w-4 text-highlight" />}
-            {locked ? 'Unlock now' : 'Lock now'}
-          </button>
-          <button
-            onClick={() => setPaused((v) => !v)}
-            className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft"
-          >
-            <AlertTriangle className="h-4 w-4 text-primary" /> {paused ? 'Resume use' : 'Pause use'}
-          </button>
-          <button className="flex flex-col items-center gap-1.5 rounded-xl border border-border/60 py-3 text-xs font-semibold text-ink transition-colors hover:bg-bg-soft">
-            <RefreshCw className="h-4 w-4 text-accent" /> Refresh
-          </button>
         </div>
       </Card>
     </div>
